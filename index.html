@@ -84,7 +84,10 @@ canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const maxTP = navigator.maxTouchPoints || 0;
-  cap.textContent = maxTP > 1 ? `This screen reports up to ${maxTP} touches` : 'Needs a multi-touch screen';
+  // Browsers often under-report (e.g. 5) while the hardware tracks 10, so treat the number as a floor.
+  cap.textContent = maxTP > 1
+    ? `This device supports ${maxTP} touches` + (maxTP < 10 ? ', but might work with more' : '')
+    : 'Needs a multi-touch screen';
 
   let W = 0, H = 0;
   function resize() {
