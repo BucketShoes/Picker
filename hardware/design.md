@@ -55,11 +55,27 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
   Kept per the all-EasyEDA rule; it covers the datasheet land.
 - **EasyEDA 3D model is wrong:** it's a 7.35 mm square-stem switch, not this 5.5 mm round-plunger part. (The earlier C53243731's EasyEDA model
   was 4.5 mm tall for a 5.0 mm part, so it was off too.)
-- **HAND-MADE 3D model** (asked for, Nov 2026): `pcb/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl`, made by `pcb/tools/make_switch_model.py`
-  from the BZCN drawing. From the drawing: 12 × 12 body, 3.2 mm body height, H 5.5 mm, plunger Ø6.8 (2.3 mm proud), legs 1.0 × 0.3 at
-  5 mm pitch, 15.0 mm tip to tip, black PPA body and plunger, tin-plated cover, silver legs. **Guessed** (not on the drawing): cover thickness 0.2,
-  cover opening Ø7.2, corner posts Ø1.2 at ±4.6, the 0.3 mm plunger chamfer, 0.15 mm body stand-off, leg bend shape.
-  Check against a real switch when one arrives. The board build script swaps it in for EasyEDA's; JLC's own viewer still shows EasyEDA's.
+- **HAND-MADE 3D models** (asked for, Nov 2026): `pcb/lib/handmade.3dshapes/HANDMADE_TSF002A0<HH>26A.wrl` for H 4.3, 4.5, 5.0 and 5.5,
+  made by `pcb/tools/make_switch_model.py` from the BZCN drawing. Body and top are the same for every height; only the plunger length changes.
+  - **Dimensioned on the drawing:** 12 × 12 body, 3.2 mm to the top of the rim, 0.3 mm stand-off, plunger Ø6.8, legs 1.0 × 0.3 at 5 mm pitch, 15.0 mm tip to tip.
+  - **Scaled off the drawing** (about 22 px/mm against the 12 mm body): rim about 0.95 wide around an inset metal plate with a Ø7.2 opening;
+    four domes about Ø1.75 at ±4.05, their tops about 0.55 mm above the rim; plunger top face about Ø6.3 with a rounded edge.
+  - **Guessed:** the plate sits 0.22 mm below the rim; the dome and edge profiles; the leg bend shape.
+  - Colours from the drawing's parts table: black PPA body and plunger, tin-plated plate, silver legs. Matches LCSC's product photos by eye.
+  - Check against a real switch when one arrives. JLC's own viewer still shows EasyEDA's model.
+- **Plunger height** above the rim is H − 3.2: 1.1 (H 4.3), 1.3 (4.5), 1.8 (5.0), 2.3 (5.5); above the dome tops it is 0.55 less.
+  Side by side: [`pcb/render-switch-heights.png`](pcb/render-switch-heights.png), [`pcb/render-switch-heights-side.png`](pcb/render-switch-heights-side.png).
+  Same family at JLC, all 260 gf, Extended (JLC API, 26 Nov 2026):
+
+  | H | Part | C-number | Stock | USD at 200 | EasyEDA land |
+  |---|---|---|---|---|---|
+  | 4.3 | TSF002**B**04326A (100k cycles) | C2888833 | 375 | 0.036 (at 100) | not checked; listing omits "gull wing" |
+  | 4.5 | TSF002A04526A | C2888709 | 1,808 | 0.026 | `SW-SMD_4P-...-LS15.1`: pads 2.54 × 1.4 at ±7.0 (16.5 across, matches BZCN's land); a different footprint from the board's |
+  | 5.0 | TSF002A05026A | C2888710 | 652 | 0.027 | same as the board's (`KEY-SMD_4P-...-LS15.0`) |
+  | 5.5 | TSF002A05526A (on the board) | C2888711 | 369 | 0.026 | `KEY-SMD_4P-...-LS15.0` |
+  | 5.0 | TSF002B05026A (100k cycles) | C2888837 | 966 | 0.037 (at 100) | `LS15.1`, as for C2888709 |
+
+  C2888709's EasyEDA model is 4.5 mm tall but its body is about 3.6 mm, so it isn't BZCN's shape either.
 - **Contact rating vs reliability:** the 50 mA 12 V rating is the most it may switch, not a reliability figure. Life (100,000 cycles here) is mechanical wear.
   Whether it registers every press depends on contact resistance (≤ 100 mΩ) and the minimum load: BZCN rate it down to 1 V 10 µA, and a 20–50 kΩ
   pull-up at 3 V passes 60–150 µA, comfortably above that.
@@ -136,19 +152,22 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
   - **Corner switches** sit 3 mm further in than the middle ones (centres 11.9 mm from the long edges), pads left and right.
   - **Middle switches** are turned 90° (pads top and bottom) so their wide land clears the cell holder.
 - **LEDs:** one outside each button (towards its player) and one inside (towards the middle), clear of the switch legs.
-  - **Corners:** 10 mm from the switch centre, just past the pad ends (the outer ones stayed where they were when the switches moved in).
-  - **Middle:** 6.8 mm from the switch centre, against the plain sides of the turned switches. The inner ones sit 4.5 mm towards the nearer
-    short edge, level with the holder ends, so players across the board see them (seat 2 is still hard to see from seats 5 and 6).
-- **Numbers:** 1–8 in silkscreen, running round the outside: left column top to bottom 1–4, right column bottom to top 5–8.
-- **Middle strip**, top to bottom: hole H1, U1 with QBAT, its capacitors and RESET pull-up, CBULK, the cell holder (centred on the board)
-  with a 20 mm silkscreen circle showing the cell, the ISP holes (labelled), the mode button (labelled MODE, 2.5 mm lower to fit the labels), hole H2.
-- **Resistors:** in the gaps between rows, next to their seat's number. Arrangement only; they'll move when routed.
-- **Branding:** the Exiles Gaming Club skull ([`art/exiles-logo.png`](art/exiles-logo.png)) in silkscreen, generated by the build script: 48 mm tall on the back
-  with the club name cut out of the skull (purple mask shows through), 5 mm tall on top between H1 and U1 (skull only; the text is too fine at that size).
+  Moved out from the switches for assembly margin (JLC's upload doesn't flag parts this close).
+  - **Corners:** outer LEDs at the long edges, 4.6 mm along from the switch row towards the middle, next to the seat number.
+    Inner LEDs beside the switch; the bottom two (4B, 5B) 1.5 mm further south to make room for the logo.
+  - **Middle:** outer LEDs 7.5 mm from the switch centre, 4.7 mm towards the board's middle row; inner LEDs 7.8 mm from the centre,
+    4.5 mm towards the nearer short edge, level with the holder ends, so players across the board see them (seat 2 is still hard to see from seats 5 and 6).
+- **Numbers:** 1–8 in silkscreen, 4–5 mm tall at the long edges next to each seat's outer LED, reading from that side. Left column top to bottom 1–4,
+  right column bottom to top 5–8 (anticlockwise seen from above).
+- **Middle strip**, top to bottom: hole H1, the mode button (labelled MODE), U1 with QBAT, its capacitors and RESET pull-up, CBULK, the cell holder
+  (centred on the board) with a 20 mm silkscreen circle showing the cell, the ISP holes (labels above), the small logo, hole H2.
+- **Resistors:** each seat's pair side by side, lined up to take the track from the MCU (placed by the user in KiCad, right side mirrored from the left).
+- **Branding:** the Exiles Gaming Club skull ([`art/exiles-logo.png`](art/exiles-logo.png)) in silkscreen, placed by `tools/silk_logo.py`: 48 mm tall on the back
+  with the club name cut out of the skull (purple mask shows through); 12.6 mm tall on top between the ISP holes and H2 (skull only; the text is too fine).
 - **Bottom:** flat. No parts, the big logo. Positions for 4 stick-on feet to be marked.
 
 ## KiCad files ([`pcb/`](pcb))
-- `picker-box.kicad_pcb`: the board. Made by `tools/build_board.py` as a starting point; from now on the board file is the source, edited in KiCad.
+- `picker-box.kicad_pcb`: the board. Made by `tools/build_board.py` as a starting point; **the board file is now the source** (edited in KiCad since 26 Nov 2026). The build script no longer matches it.
 - `lib/`: EasyEDA footprints and symbols (`PickerBox`). The 3D models aren't in git (unclear redistribution terms): run `tools/fetch_parts.py` to fetch them.
 - No schematic yet; the nets on the board are the netlist for now.
 - **DRC** (`kicad-cli pcb drc`): no part overlaps or copper clearance errors. It reports the 108 unrouted connections (expected) and
