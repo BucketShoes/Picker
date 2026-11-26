@@ -126,10 +126,18 @@ seats = {  # seat: (x offset from middle, row y, rotation, LED offset from switc
     8: (CORNER_COL, ROWS[0], 0, 10.0, 8.0, 90),
 }
 
+# EasyEDA's model for C2888711 is a different switch (red, square stem, 7.35 mm tall). It is replaced with a HAND-MADE model
+# drawn from the BZCN datasheet (tools/make_switch_model.py says which dimensions are measured and which are guessed).
+SW_MODEL = "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+
 for s, (dx, y, rot, led_off, res_dy, res_rot) in seats.items():
     x = CX + dx
-    place(LIB, "KEY-SMD_4P-L12.0-W12.0-P5.00-LS15.0", f"SW{s}", "TSF002A05526A", x, y, rot, "C2888711",
-          {1: f"BTN{s}", 2: f"BTN{s}", 3: "GND", 4: "GND"})
+    sw = place(LIB, "KEY-SMD_4P-L12.0-W12.0-P5.00-LS15.0", f"SW{s}", "TSF002A05526A", x, y, rot, "C2888711",
+               {1: f"BTN{s}", 2: f"BTN{s}", 3: "GND", 4: "GND"})
+    sw.Models().clear()
+    m = pcbnew.FP_3DMODEL()
+    m.m_Filename = SW_MODEL
+    sw.Add3DModel(m)
     outer = -1 if dx < 0 else 1
     # LED A outside (towards the player), LED B inside (towards the middle). On the middle (turned) switches the inner LED
     # is for players across the board, so it moves 4.5 mm towards the nearer short edge, out past the end of the cell
@@ -163,13 +171,98 @@ for ref, (x, y), n in (("CDEC1", (CX - 7.0, 14.0), "VCC"), ("CDEC2", (CX - 7.0, 
     place(LIB, "C0603", ref, "100nF", x, y, 90, "C14663", {1: n, 2: "GND"})
 place(LIB, "R0603", "RRST", "10k", CX - 7.0, 21.0, 90, "C25804", {1: "RESET", 2: "VCC"})
 
-# ---- mode button, ISP holes (pin order TBD: this order is a placeholder), holes
-place(LIB, "SW-SMD_L3.9-W3.0-P4.45", "SWMODE", "TS-1088-AR02016", CX, 67.0, 0, "C720477", {1: "MODE", 2: "GND"})
-place(LIB, "HDR-TH_6P-P2.54-V-M-1", "JISP", "ISP (pin order TBD)", CX, 61.0, 0, "C37208",
-      {1: "GND", 2: "VCC", 3: "RESET", 4: "SCK", 5: "MISO", 6: "MOSI"}, dnp=True)
+# ---- mode button, ISP holes (wired to a breadboard programmer; every pin labelled in silk), holes
+swm = place(LIB, "SW-SMD_L3.9-W3.0-P4.45", "SWMODE", "TS-1088-AR02016", CX, 69.5, 0, "C720477", {1: "MODE", 2: "GND"})
+swm.Reference().SetVisible(False)
+t = pcbnew.PCB_TEXT(board)
+t.SetText("MODE"); t.SetLayer(pcbnew.F_SilkS); t.SetPosition(pt(CX, 72.6))
+t.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0))); t.SetTextThickness(mm(0.15))
+board.Add(t)
+ISP = {1: "GND", 2: "VCC", 3: "RESET", 4: "SCK", 5: "MISO", 6: "MOSI"}
+ISP_SILK = {"RESET": "RST"}
+jisp = place(LIB, "HDR-TH_6P-P2.54-V-M-1", "JISP", "ISP", CX, 61.0, 0, "C37208", ISP, dnp=True)
+for p in jisp.Pads():
+    t = pcbnew.PCB_TEXT(board)
+    name = ISP[int(p.GetNumber())]
+    t.SetText(ISP_SILK.get(name, name)); t.SetLayer(pcbnew.F_SilkS)
+    t.SetPosition(pcbnew.VECTOR2I(p.GetPosition().x, mm(OY + 64.4)))
+    t.SetTextAngleDegrees(90)
+    t.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0))); t.SetTextThickness(mm(0.15))
+    board.Add(t)
+jisp.Reference().SetVisible(False)
 for ref, y in (("H1", 3.5), ("H2", 78.5)):
     place(os.path.join(KICAD_FP, "MountingHole.pretty"), "MountingHole_3.2mm_M3", ref, "3.2mm hole", CX, y)
 
+
+# ---- club logo (hardware/art/exiles-logo.png) as filled silkscreen: the white skull is silk, the purple mask is the
+# background. Big on the back with the club name cut out of the skull; small on the top, skull only (text too fine).
+def logo(layer, cx, cy, height, with_text, mirror):
+    from PIL import Image
+    im = Image.open(os.path.join(PCB_DIR, "..", "art", "exiles-logo.png")).convert("RGB")
+    lo = 195 if with_text else 140      # the club name is grey (~165) on the white (~245) skull
+
+    def silk(rgb):
+        return min(rgb) > lo and max(rgb) - min(rgb) < 30
+    px = im.load()
+    w, h = im.size
+    cols = [x for x in range(w) if any(silk(px[x, y]) for y in range(h))]
+    rows = [y for y in range(h) if any(silk(px[x, y]) for x in range(w))]
+    x0, x1, y0, y1 = cols[0], cols[-1] + 1, rows[0], rows[-1] + 1
+    k = height / (y1 - y0)
+    sps = pcbnew.SHAPE_POLY_SET()
+
+    def add_rect(ax, bx, ay, by):
+        X = [cx + ((x0 + x1) / 2 - v) * k if mirror else cx + (v - (x0 + x1) / 2) * k for v in (ax, bx)]
+        Y = [cy + (v - (y0 + y1) / 2) * k for v in (ay, by)]
+        o = sps.NewOutline()
+        for xx, yy in ((X[0], Y[0]), (X[1], Y[0]), (X[1], Y[1]), (X[0], Y[1])):
+            sps.Append(mm(OX + xx), mm(OY + yy), o)
+    for y in range(y0, y1):
+        x = x0
+        while x < x1:
+            if silk(px[x, y]):
+                s0 = x
+                while x < x1 and silk(px[x, y]):
+                    x += 1
+                add_rect(s0, x, y, y + 1)
+            x += 1
+    sps.Simplify()
+    for i in range(sps.OutlineCount()):
+        one = pcbnew.SHAPE_POLY_SET()
+        one.AddOutline(sps.Outline(i))
+        for j in range(sps.HoleCount(i)):
+            one.AddHole(sps.Hole(i, j))
+        s = pcbnew.PCB_SHAPE(board, pcbnew.SHAPE_T_POLY)
+        s.SetLayer(layer); s.SetPolyShape(one); s.SetFilled(True); s.SetWidth(0)
+        board.Add(s)
+
+
+logo(pcbnew.B_SilkS, CX, 33.5, 48.0, True, True)
+logo(pcbnew.F_SilkS, CX, 8.3, 5.0, False, False)     # between H1 and U1
+
 board.SetCopperLayerCount(2)
 pcbnew.SaveBoard(OUT, board)
+
+# Purple soldermask (JLC: same price as green). The stackup isn't reachable from pcbnew's Python, so it's written into
+# the saved file. It only colours KiCad's 3D view; the order form sets the real colour.
+STACKUP = """(stackup
+			(layer "F.SilkS" (type "Top Silk Screen"))
+			(layer "F.Paste" (type "Top Solder Paste"))
+			(layer "F.Mask" (type "Top Solder Mask") (color "Purple") (thickness 0.01))
+			(layer "F.Cu" (type "copper") (thickness 0.035))
+			(layer "dielectric 1" (type "core") (thickness 1.51) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+			(layer "B.Cu" (type "copper") (thickness 0.035))
+			(layer "B.Mask" (type "Bottom Solder Mask") (color "Purple") (thickness 0.01))
+			(layer "B.Paste" (type "Bottom Solder Paste"))
+			(layer "B.SilkS" (type "Bottom Silk Screen"))
+			(copper_finish "None")
+			(dielectric_constraints no)
+		)
+		"""
+text = open(OUT, encoding="utf-8").read()
+assert text.count("(setup") == 1 and "(stackup" not in text
+i = text.index("(setup") + len("(setup")
+j = len(text[i:]) - len(text[i:].lstrip())
+text = text[:i + j] + STACKUP + text[i + j:]
+open(OUT, "w", encoding="utf-8", newline="").write(text)
 print("saved", OUT, "footprints:", len(board.GetFootprints()), "nets:", len(nets))

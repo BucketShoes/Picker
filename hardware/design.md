@@ -7,7 +7,7 @@ firmware only. Planned as a small run of handouts for the gaming club.
 Kept deliberately simple and cheap: no USB, no charger, no boost, no sound, no case. It runs from a CR2032 and sleeps until a
 button is pressed. Every part is SMD and on the top side, so the bottom is flat (stick-on feet, nothing to scratch a table).
 
-Status: **first KiCad board** in [`pcb/`](pcb): every part placed with its EasyEDA footprint and 3D model, nets assigned as guidance, no tracks. Renders: [`pcb/render-top.png`](pcb/render-top.png), [`pcb/render-angle.png`](pcb/render-angle.png). Firmware last. All prices are USD.
+Status: **first KiCad board** in [`pcb/`](pcb): every part placed with its EasyEDA footprint and 3D model, nets assigned as guidance, no tracks. Renders: [`pcb/render-top.png`](pcb/render-top.png), [`pcb/render-bottom.png`](pcb/render-bottom.png), [`pcb/render-angle.png`](pcb/render-angle.png), switch close-ups [`pcb/render-switch.png`](pcb/render-switch.png) and [`pcb/render-switch-side.png`](pcb/render-switch-side.png) (**hand-made switch model**, see below). Firmware last. All prices are USD.
 
 ## Parts
 
@@ -15,7 +15,7 @@ Live JLC data, 2026-11-26. Prices per unit at the lowest break unless noted.
 
 | Ref | Qty | Part | LCSC | JLC type | Stock | Notes |
 |---|---|---|---|---|---|---|
-| U1 | 1 | ATmega328P-AU (TQFP-32) | C14877 | Promotional Extended | 36,556 | For now. The 328PB (C132230, USD 1.46 at 10, Extended) is decided once the quantity is: it gives all 8 seats hardware PWM, but pins 3 and 6 become PE0/PE1 instead of GND/VCC |
+| U1 | 1 | ATmega328P-AU (TQFP-32) | C14877 | Promotional Extended | 36,556 | The board takes either chip with no KiCad change: pins 3 and 6 are wired GND and VCC, which on the 328PB are PE0/PE1 (firmware must leave them as inputs). Choose at JLC's BOM step by changing U1's part number to the 328PB (C132230, USD 1.46 at 10, Extended); likely 328PB at qty 10 |
 | SW1–SW8 | 8 | BZCN TSF002A05526A, 12×12 mm tactile, 260 gf, 5.5 mm tall (plunger 2.3 mm proud), 6.8 mm plunger, ≥ 30,000 cycles | C2888711 | Extended | 369 | USD 0.033. Every field of the part number is decoded by its datasheet. Packed loose (code A): check JLC will place it |
 | SWMODE | 1 | TS-1088-AR02016, 3.9×3 mm tactile, 1.6 N | C720477 | Basic | 715,648 | Mode button in the middle |
 | BAT1 | 1 | Lian Xin XDCR-2032-603, CR2032 holder, top-loading | C7498148 | Extended | 32,265 | Plastic hooks one side, hooked metal contact the other. + face slightly recessed. USD 0.17 |
@@ -25,7 +25,7 @@ Live JLC data, 2026-11-26. Prices per unit at the lowest break unless noted.
 | QBAT | 1 | AO3401A P-MOSFET, SOT-23 | C15127 | Basic | 1.06 M | Reverse-cell protection; gate tied to GND |
 | CDEC1, CDEC2, CAVCC, CAREF | 4 | 100 nF 0603 | C14663 | Basic | 49 M | VCC ×2, AVCC, AREF (the 328PB has one VCC pin, so one fewer) |
 | CBULK | 1 | 100 µF 6.3 V X5R 1206 | C15008 | Basic | 2.1 M | Covers LED current peaks a coin cell can't |
-| JISP | — | 6 plated holes in a row, 2.54 mm pitch (footprint of header C37208, not fitted) | C37208 | — | — | Program by pushing a pin strip into the holes. **Pin order TBD**; the board has a placeholder order |
+| JISP | — | 6 plated holes in a row, 2.54 mm pitch (footprint of header C37208, not fitted) | C37208 | — | — | Program by pushing a pin strip into the holes, wired to a breadboard programmer. Order GND, VCC, RST, SCK, MISO, MOSI (pin 1 square), every pin labelled in silkscreen |
 | H1, H2 | — | 3.2 mm holes | — | — | — | Lanyard and/or mounting. KiCad's stock `MountingHole_3.2mm_M3` (no copper, no model): the one footprint not from EasyEDA, since a bare hole has no EasyEDA part |
 
 Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with the 328PB. Promotional and Economic status only really shows at the ordering step.
@@ -53,8 +53,13 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
   so its "30" (300 gf) rests on JLC's listing alone, and the trailing "L" sits in a field the datasheet calls a special code, "not normally used", without defining it.
 - **EasyEDA land vs datasheet:** EasyEDA's land is larger (pads 3.0 × 1.7 mm, 18 mm across) than BZCN's drawing (2.0 × 1.5 mm, 16.5 mm across).
   Kept per the all-EasyEDA rule; it covers the datasheet land.
-- **EasyEDA 3D model is wrong:** it's a 7.35 mm square-stem switch, not this 5.5 mm round-plunger part, so renders don't show the real height.
-  An accurate model would have to be made by hand from the BZCN drawing (not done).
+- **EasyEDA 3D model is wrong:** it's a 7.35 mm square-stem switch, not this 5.5 mm round-plunger part. (The earlier C53243731's EasyEDA model
+  was 4.5 mm tall for a 5.0 mm part, so it was off too.)
+- **HAND-MADE 3D model** (asked for, Nov 2026): `pcb/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl`, made by `pcb/tools/make_switch_model.py`
+  from the BZCN drawing. From the drawing: 12 × 12 body, 3.2 mm body height, H 5.5 mm, plunger Ø6.8 (2.3 mm proud), legs 1.0 × 0.3 at
+  5 mm pitch, 15.0 mm tip to tip, black PPA body and plunger, tin-plated cover, silver legs. **Guessed** (not on the drawing): cover thickness 0.2,
+  cover opening Ø7.2, corner posts Ø1.2 at ±4.6, the 0.3 mm plunger chamfer, 0.15 mm body stand-off, leg bend shape.
+  Check against a real switch when one arrives. The board build script swaps it in for EasyEDA's; JLC's own viewer still shows EasyEDA's.
 - **Contact rating vs reliability:** the 50 mA 12 V rating is the most it may switch, not a reliability figure. Life (100,000 cycles here) is mechanical wear.
   Whether it registers every press depends on contact resistance (≤ 100 mΩ) and the minimum load: BZCN rate it down to 1 V 10 µA, and a 20–50 kΩ
   pull-up at 3 V passes 60–150 µA, comfortably above that.
@@ -62,7 +67,7 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
 ## Footprints and models
 
 **All EasyEDA** (easyeda2kicad, installed). KiCad's built-in libraries don't cover the switches or the holder, and boards don't
-mix libraries. **No hand-made footprints or models are planned.** If one turns out to be needed, I'll say so first.
+mix libraries. No hand-made footprints. **One hand-made 3D model**, the main switch (above), made on request because EasyEDA's is a different part.
 
 ## Power
 
@@ -89,7 +94,8 @@ CR2032 − ── GND
   - 20 mA per pin (rated 40 mA; test condition 20 mA at 5 V);
   - at most 80 mA per port group and per GND pin, with seats spread across groups (limits 100 mA each; DS40001906C Table 33-1 and page 407 notes).
 - **From the cell** that gives about 4 mA per LED at full brightness (fresh cell), which is the brightest it ever gets. PWM dims the rest.
-- **PWM** at 1 kHz or more. On the 328PB all 8 seats get hardware PWM (Timers 0–4), so it costs no CPU.
+- **PWM** at 1 kHz or more. On the 328PB all 8 seats get hardware PWM (Timers 0–4), so it costs no CPU. On a 328P, seats 6–8 (PD0–PD2) need
+  software PWM: a few brightness steps at 1 MHz, more if firmware raises the clock prescaler to 2–4 MHz (fine down to 1.8 V).
 
 ## Pin map (guidance; as on the board, fixed later)
 
@@ -123,7 +129,7 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
 
 ## General layout (as on the first board)
 
-- **Board:** **53 × 82 mm**, 3 mm corner radius, so it fits a 54 × 85.6 mm card slot. 2-layer, 1.6 mm, purple.
+- **Board:** **53 × 82 mm**, 3 mm corner radius, so it fits a 54 × 85.6 mm card slot. 2-layer, 1.6 mm, purple (chosen; same price as green). The board's stackup is set to purple so KiCad's 3D view matches.
   JLC lists purple as a standard colour with no extra fee on most 2-layer orders ([JLC blog](https://jlcpcb.com/blog/pcb-solder-mask-colors-performance),
   [capabilities](https://jlcpcb.com/capabilities/Capabilities)); confirm in the dry-run quote.
 - **Buttons:** 4 down each long side, symmetric, the outer ones in the corners. Rows at 6.5, 29.5, 52.5, 75.5 mm from the top.
@@ -131,13 +137,15 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
   - **Middle switches** are turned 90° (pads top and bottom) so their wide land clears the cell holder.
 - **LEDs:** one outside each button (towards its player) and one inside (towards the middle), clear of the switch legs.
   - **Corners:** 10 mm from the switch centre, just past the pad ends (the outer ones stayed where they were when the switches moved in).
-  - **Middle:** 6.8 mm from the switch centre, against the plain sides of the turned switches. The inner ones still sit beside the cell holder.
+  - **Middle:** 6.8 mm from the switch centre, against the plain sides of the turned switches. The inner ones sit 4.5 mm towards the nearer
+    short edge, level with the holder ends, so players across the board see them (seat 2 is still hard to see from seats 5 and 6).
 - **Numbers:** 1–8 in silkscreen, running round the outside: left column top to bottom 1–4, right column bottom to top 5–8.
 - **Middle strip**, top to bottom: hole H1, U1 with QBAT, its capacitors and RESET pull-up, CBULK, the cell holder (centred on the board)
-  with a 20 mm silkscreen circle showing the cell, the ISP holes, the mode button, hole H2.
+  with a 20 mm silkscreen circle showing the cell, the ISP holes (labelled), the mode button (labelled MODE, 2.5 mm lower to fit the labels), hole H2.
 - **Resistors:** in the gaps between rows, next to their seat's number. Arrangement only; they'll move when routed.
-- **Branding:** small logo on top, large logo and club text on the back. No space reserved.
-- **Bottom:** flat. No parts. Positions for 4 stick-on feet to be marked.
+- **Branding:** the Exiles Gaming Club skull ([`art/exiles-logo.png`](art/exiles-logo.png)) in silkscreen, generated by the build script: 48 mm tall on the back
+  with the club name cut out of the skull (purple mask shows through), 5 mm tall on top between H1 and U1 (skull only; the text is too fine at that size).
+- **Bottom:** flat. No parts, the big logo. Positions for 4 stick-on feet to be marked.
 
 ## KiCad files ([`pcb/`](pcb))
 - `picker-box.kicad_pcb`: the board. Made by `tools/build_board.py` as a starting point; from now on the board file is the source, edited in KiCad.
@@ -145,9 +153,10 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
 - No schematic yet; the nets on the board are the netlist for now.
 - **DRC** (`kicad-cli pcb drc`): no part overlaps or copper clearance errors. It reports the 108 unrouted connections (expected) and
   silkscreen labels overlapping each other and pads (to tidy at layout).
-- **Renders:** the switch models come out see-through (EasyEDA's model colours); the real switches are black.
+- **Renders:** the main switches use the hand-made model; everything else is EasyEDA's.
 
 ## Open
-1. ISP pin order (TBD).
-2. 328P or 328PB, decided with the quantity.
-3. Logo artwork and club text (TBD).
+1. 328P or 328PB: chosen at JLC's BOM step, no KiCad change (likely 328PB at qty 10).
+2. Silkscreen tidy (reference labels overlap the numbers, the small logo and each other).
+3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
+   storing the image and flashing it itself (handy for updates on site). Firmware in PlatformIO or the Arduino IDE; decided at the firmware stage.
