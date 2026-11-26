@@ -13,7 +13,7 @@ import sys
 
 PARTS = {
     "C14877": "ATmega328P-AU",
-    "C53243731": "BZCN TSF002B05030AL 12x12 tactile, 300 gf, 5.0 mm",
+    "C2888711": "BZCN TSF002A05526A 12x12 tactile, 260 gf, 5.5 mm",
     "C720477": "TS-1088-AR02016 mode button",
     "C7498148": "XDCR-2032-603 CR2032 holder",
     "C2286": "KT-0603R red LED",

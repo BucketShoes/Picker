@@ -16,7 +16,7 @@ Live JLC data, 2026-11-26. Prices per unit at the lowest break unless noted.
 | Ref | Qty | Part | LCSC | JLC type | Stock | Notes |
 |---|---|---|---|---|---|---|
 | U1 | 1 | ATmega328P-AU (TQFP-32) | C14877 | Promotional Extended | 36,556 | For now. The 328PB (C132230, USD 1.46 at 10, Extended) is decided once the quantity is: it gives all 8 seats hardware PWM, but pins 3 and 6 become PE0/PE1 instead of GND/VCC |
-| SW1–SW8 | 8 | BZCN TSF002B05030AL, 12×12 mm tactile, 300 gf, 5.0 mm tall (plunger 1.8 mm proud), 6.8 mm plunger | C53243731 | Extended | 435 | USD 0.067. Used as the button itself, no cap. Packed loose: check JLC will place it |
+| SW1–SW8 | 8 | BZCN TSF002A05526A, 12×12 mm tactile, 260 gf, 5.5 mm tall (plunger 2.3 mm proud), 6.8 mm plunger, ≥ 30,000 cycles | C2888711 | Extended | 369 | USD 0.033. Every field of the part number is decoded by its datasheet. Packed loose (code A): check JLC will place it |
 | SWMODE | 1 | TS-1088-AR02016, 3.9×3 mm tactile, 1.6 N | C720477 | Basic | 715,648 | Mode button in the middle |
 | BAT1 | 1 | Lian Xin XDCR-2032-603, CR2032 holder, top-loading | C7498148 | Extended | 32,265 | Plastic hooks one side, hooked metal contact the other. + face slightly recessed. USD 0.17 |
 | LED1A/B–LED8A/B | 16 | KT-0603R red LED, 0603 | C2286 | Basic | 8.6 M | One outside and one inside each button, between its pads |
@@ -49,7 +49,12 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
   For the same force a bigger plunger spreads it over more fingertip, so it feels less sharp, not lighter.
 - **Bigger plunger tops:** every 12×12 datasheet read here (Kinghelm, XKB, BZCN) has a 6.0–6.8 mm plunger. A bigger flat top
   means a square-stem switch with a snap-on cap, which is a hand-fitted extra part.
-- **Chosen:** TSF002B05030AL, the cheapest that meets the brief (≥ 260 gf, preferably more; 1–2 mm proud; biggest plunger; short body).
+- **Chosen:** TSF002A05526A (C2888711). TSF002B05030AL (C53243731) was dropped: its datasheet (the TSF002 family spec) lists force codes 18 and 26 only,
+  so its "30" (300 gf) rests on JLC's listing alone, and the trailing "L" sits in a field the datasheet calls a special code, "not normally used", without defining it.
+- **EasyEDA land vs datasheet:** EasyEDA's land is larger (pads 3.0 × 1.7 mm, 18 mm across) than BZCN's drawing (2.0 × 1.5 mm, 16.5 mm across).
+  Kept per the all-EasyEDA rule; it covers the datasheet land.
+- **EasyEDA 3D model is wrong:** it's a 7.35 mm square-stem switch, not this 5.5 mm round-plunger part, so renders don't show the real height.
+  An accurate model would have to be made by hand from the BZCN drawing (not done).
 - **Contact rating vs reliability:** the 50 mA 12 V rating is the most it may switch, not a reliability figure. Life (100,000 cycles here) is mechanical wear.
   Whether it registers every press depends on contact resistance (≤ 100 mΩ) and the minimum load: BZCN rate it down to 1 V 10 µA, and a 20–50 kΩ
   pull-up at 3 V passes 60–150 µA, comfortably above that.
@@ -121,11 +126,15 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
 - **Board:** **53 × 82 mm**, 3 mm corner radius, so it fits a 54 × 85.6 mm card slot. 2-layer, 1.6 mm, purple.
   JLC lists purple as a standard colour with no extra fee on most 2-layer orders ([JLC blog](https://jlcpcb.com/blog/pcb-solder-mask-colors-performance),
   [capabilities](https://jlcpcb.com/capabilities/Capabilities)); confirm in the dry-run quote.
-- **Buttons:** 4 down each long side, symmetric, the outer ones in the corners. Rows are even at 23 mm (6.5, 29.5, 52.5, 75.5 mm from the top);
-  they don't need to be even, but even already leaves the cell clear of the middle rows' LEDs.
-- **LEDs:** one outside each button (towards its player) and one inside (towards the middle), between that side's pads.
+- **Buttons:** 4 down each long side, symmetric, the outer ones in the corners. Rows at 6.5, 29.5, 52.5, 75.5 mm from the top.
+  - **Corner switches** sit 3 mm further in than the middle ones (centres 11.9 mm from the long edges), pads left and right.
+  - **Middle switches** are turned 90° (pads top and bottom) so their wide land clears the cell holder.
+- **LEDs:** one outside each button (towards its player) and one inside (towards the middle), clear of the switch legs.
+  - **Corners:** 10 mm from the switch centre, just past the pad ends (the outer ones stayed where they were when the switches moved in).
+  - **Middle:** 6.8 mm from the switch centre, against the plain sides of the turned switches. The inner ones still sit beside the cell holder.
 - **Numbers:** 1–8 in silkscreen, running round the outside: left column top to bottom 1–4, right column bottom to top 5–8.
-- **Middle strip**, top to bottom: hole H1, QBAT and U1 with its capacitors and RESET pull-up, CBULK, the cell holder (centred on the board), the ISP holes, the mode button, hole H2.
+- **Middle strip**, top to bottom: hole H1, U1 with QBAT, its capacitors and RESET pull-up, CBULK, the cell holder (centred on the board)
+  with a 20 mm silkscreen circle showing the cell, the ISP holes, the mode button, hole H2.
 - **Resistors:** in the gaps between rows, next to their seat's number. Arrangement only; they'll move when routed.
 - **Branding:** small logo on top, large logo and club text on the back. No space reserved.
 - **Bottom:** flat. No parts. Positions for 4 stick-on feet to be marked.

@@ -3,3 +3,4 @@ hardware/pcb/*-backups/
 hardware/pcb/*.kicad_prl
 hardware/pcb/~*.lck
 hardware/pcb/fp-info-cache
+hardware/pcb/.history/

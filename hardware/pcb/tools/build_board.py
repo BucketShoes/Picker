@@ -108,40 +108,55 @@ for s, (lp, lport, bp, bport) in SEATS.items():
     U1_PINS[lp] = f"LED{s}"
     U1_PINS[bp] = f"BTN{s}"
 
-place(LIB, "TQFP-32_L7.0-W7.0-P0.80-LS9.0-BL", "U1", "ATmega328P-AU", CX, 15.0, 0, "C14877", U1_PINS)
+place(LIB, "TQFP-32_L7.0-W7.0-P0.80-LS9.0-BL", "U1", "ATmega328P-AU", CX, 16.0, 0, "C14877", U1_PINS)
 
 # ---- seats: left column top to bottom = 1..4, right column bottom to top = 5..8
-seat_pos = {1: (-COL, ROWS[0]), 2: (-COL, ROWS[1]), 3: (-COL, ROWS[2]), 4: (-COL, ROWS[3]),
-            5: (COL, ROWS[3]), 6: (COL, ROWS[2]), 7: (COL, ROWS[1]), 8: (COL, ROWS[0])}
-# where each seat's two resistors go: the gap below (+) or above (-) its switch
-res_dy = {ROWS[0]: 8.0, ROWS[1]: 8.0, ROWS[2]: -8.0, ROWS[3]: -8.0}
+# Switch: BZCN TSF002A05526A (C2888711). Its EasyEDA land is 18 mm across the pads (pads 3.0 x 1.7 at x +-7.5, y +-2.5).
+# Corner switches sit 3 mm in from the middle-row columns, unrotated: pads left/right, LEDs just past the pad ends.
+# Middle switches are turned 90 deg (pads top/bottom) so their 18 mm land clears the cell holder; LEDs beside the plain sides.
+CORNER_COL = COL - 3.0
+seats = {  # seat: (x offset from middle, row y, rotation, LED offset from switch centre, resistor y offset, resistor rotation)
+    1: (-CORNER_COL, ROWS[0], 0, 10.0, 8.0, 90),
+    2: (-COL, ROWS[1], 90, 6.8, 10.1, 0),
+    3: (-COL, ROWS[2], 90, 6.8, -10.1, 0),
+    4: (-CORNER_COL, ROWS[3], 0, 10.0, -8.0, 90),
+    5: (CORNER_COL, ROWS[3], 0, 10.0, -8.0, 90),
+    6: (COL, ROWS[2], 90, 6.8, -10.1, 0),
+    7: (COL, ROWS[1], 90, 6.8, 10.1, 0),
+    8: (CORNER_COL, ROWS[0], 0, 10.0, 8.0, 90),
+}
 
-for s, (dx, y) in seat_pos.items():
+for s, (dx, y, rot, led_off, res_dy, res_rot) in seats.items():
     x = CX + dx
-    place(LIB, "SW-SMD_4P-L12.0-W12.0-P5.00-LS15.1", f"SW{s}", "TSF002B05030AL", x, y, 0, "C53243731",
+    place(LIB, "KEY-SMD_4P-L12.0-W12.0-P5.00-LS15.0", f"SW{s}", "TSF002A05526A", x, y, rot, "C2888711",
           {1: f"BTN{s}", 2: f"BTN{s}", 3: "GND", 4: "GND"})
     outer = -1 if dx < 0 else 1
-    # LED A outside (towards the player), LED B inside (towards the middle), each between that side's pads
+    # LED A outside (towards the player), LED B inside (towards the middle)
     for tag, side in (("A", outer), ("B", -outer)):
-        place(LIB, "LED-SMD_L1.6-W0.8-R-RD", f"LED{s}{tag}", "KT-0603R red", x + side * 7.0, y, 90, "C2286",
+        place(LIB, "LED-SMD_L1.6-W0.8-R-RD", f"LED{s}{tag}", "KT-0603R red", x + side * led_off, y, 90, "C2286",
               {1: "VCC", 2: f"LED{s}{tag}_K"})
-    ry = y + res_dy[y]
+    ry = y + res_dy
     for tag, rx in (("A", x + outer * 3.0), ("B", x - outer * 3.0)):
-        place(LIB, "R0603", f"RL{s}{tag}", "270", rx, ry, 90, "C22966", {1: f"LED{s}", 2: f"LED{s}{tag}_K"})
+        place(LIB, "R0603", f"RL{s}{tag}", "270", rx, ry, res_rot, "C22966", {1: f"LED{s}", 2: f"LED{s}{tag}_K"})
     t = pcbnew.PCB_TEXT(board)
     t.SetText(str(s)); t.SetLayer(pcbnew.F_SilkS); t.SetPosition(pt(x, ry))
-    t.SetTextSize(pcbnew.VECTOR2I(mm(2.0), mm(2.0))); t.SetTextThickness(mm(0.3))
+    size = 2.0 if rot == 0 else 1.5
+    t.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size))); t.SetTextThickness(mm(0.25))
     board.Add(t)
 
 # ---- power
 place(LIB, "BAT-SMD_XDCR-2032-603", "BAT1", "XDCR-2032-603", CX, 41.0, 90, "C7498148", {1: "VBAT", 2: "GND"})
-place(LIB, "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR", "QBAT", "AO3401A", CX + 7.0, 11.0, 0, "C15127",
+# reference outline of the 20 mm cell, centred in the holder
+cell = pcbnew.PCB_SHAPE(board, pcbnew.SHAPE_T_CIRCLE)
+cell.SetLayer(pcbnew.F_SilkS); cell.SetCenter(pt(CX, 41.0)); cell.SetEnd(pt(CX + 10.0, 41.0)); cell.SetWidth(mm(0.15))
+board.Add(cell)
+place(LIB, "SOT-23_L2.9-W1.3-P1.90-LS2.4-BR", "QBAT", "AO3401A", CX + 8.5, 14.5, 0, "C15127",
       {1: "GND", 2: "VCC", 3: "VBAT"})
-place(LIB, "C1206", "CBULK", "100uF 6.3V", CX, 22.8, 0, "C15008", {1: "VCC", 2: "GND"})
-for ref, (x, y), n in (("CDEC1", (CX - 7.0, 13.0), "VCC"), ("CDEC2", (CX - 7.0, 17.0), "VCC"),
-                       ("CAVCC", (CX + 7.0, 17.0), "VCC"), ("CAREF", (CX + 7.0, 19.5), "AREF")):
+place(LIB, "C1206", "CBULK", "100uF 6.3V", CX, 23.5, 0, "C15008", {1: "VCC", 2: "GND"})
+for ref, (x, y), n in (("CDEC1", (CX - 7.0, 14.0), "VCC"), ("CDEC2", (CX - 7.0, 18.0), "VCC"),
+                       ("CAVCC", (CX + 7.0, 18.0), "VCC"), ("CAREF", (CX + 7.0, 20.5), "AREF")):
     place(LIB, "C0603", ref, "100nF", x, y, 90, "C14663", {1: n, 2: "GND"})
-place(LIB, "R0603", "RRST", "10k", CX - 7.0, 20.0, 90, "C25804", {1: "RESET", 2: "VCC"})
+place(LIB, "R0603", "RRST", "10k", CX - 7.0, 21.0, 90, "C25804", {1: "RESET", 2: "VCC"})
 
 # ---- mode button, ISP holes (pin order TBD: this order is a placeholder), holes
 place(LIB, "SW-SMD_L3.9-W3.0-P4.45", "SWMODE", "TS-1088-AR02016", CX, 67.0, 0, "C720477", {1: "MODE", 2: "GND"})
