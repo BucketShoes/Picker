@@ -118,14 +118,22 @@ CR2032 − ── GND
 Pins are swappable within a category: what's fixed is the category, not which seat gets which pin, so routing may still swap them.
 Seat n always means SWn, LEDnA/B, RLnA/B and the silkscreen number n; only the nets to U1 move. Pin numbers are TQFP-32.
 
-**Categories** (328P and 328PB):
-- **LED (needs hardware PWM on the 328PB, off the ISP pins):** exactly 8 pins: PD0 (30), PD1 (31), PD2 (32), PD3 (1), PD5 (9), PD6 (10),
-  PB1 (13), PB2 (14). Timers: 0 (PD6, PD5), 1 (PB1, PB2), 2 (PD3; its other output is MOSI), 3 (PD0, PD2), 4 (PD1). On the 328P, PD0–PD2 have none.
-- **Button (needs wake = pin-change interrupt, which every I/O pin has):** PD4 (2), PD7 (11), PB0 (12), PB6 (7), PB7 (8), PC0–PC5 (23–28):
-  11 pins for 9 buttons. PB6/PB7 are the crystal pins, free on the internal oscillator.
-- **ISP, kept to programming:** MOSI (15), MISO (16), SCK (17), RESET (29).
-- **Analog only:** ADC6 (19), ADC7 (22) (PE2/PE3 on the 328PB). Unused: the battery is measured against the internal 1.1 V reference, no pin needed.
-- **Power:** VCC 4 and 6 (pin 6 is PE1 on the 328PB, tied to VCC so either chip fits), GND 3, 5, 21 (pin 3 is PE0 on the 328PB), AVCC 18, AREF 20.
+**Categories** overlap on purpose: a pin is in every category it could serve, as "good" or "possible but undesirable".
+Overlaps are resolved first, then rotation, then swaps within a category for routing.
+- **PWM (LEDs):** good: PD0 (30), PD1 (31), PD2 (32), PD3 (1), PD5 (9), PD6 (10), PB1 (13), PB2 (14), all on the 328PB.
+  Possible: PB3/MOSI (15, OC2A), undesirable since it's a programming pin. 8 LEDs need 8, so the 8 good pins are forced and decide themselves.
+  Timers: 0 (PD6, PD5), 1 (PB1, PB2), 2 (PD3), 3 (PD0, PD2), 4 (PD1). On the 328P, PD0–PD2 have no PWM.
+- **Button (needs a pull-up and a pin-change interrupt to wake):** good: every I/O pin, since every one has both. That is all of PB, PC0–PC5
+  and PD, and on the 328PB also PE2/PE3 (19, 22). Possible but undesirable: MOSI, MISO, SCK (shared with programming).
+  Not usable: RESET (only as I/O with a fuse that disables programming), ADC6/ADC7 on the 328P (analog only: no pull-up, no wake),
+  pins 3 and 6 (tied to GND/VCC so either chip fits).
+- **Analog:** ADC0–ADC5 (PC0–PC5, 23–28), ADC6 (19), ADC7 (22). Nothing needs one: the battery is measured against the internal
+  1.1 V reference, with no pin.
+- **Programming:** MOSI (15), MISO (16), SCK (17), RESET (29), fixed.
+- **Power:** VCC 4 and 6 (pin 6 is PE1 on the 328PB), GND 3, 5, 21 (pin 3 is PE0 on the 328PB), AVCC 18, AREF 20.
+
+Resolving the overlaps is trivial here: the 8 PWM pins go to the LEDs, and the 9 buttons take any 9 of the 11 remaining good I/O pins
+(PB0, PB6, PB7, PC0–PC5, PD4, PD7), leaving the programming pins alone.
 
 **U1 rotation: unchanged.** On this footprint pins 1–8 run along U1's bottom edge, 9–16 up its right edge, 17–24 right to left along the
 top, 25–32 down its left edge. That already suits the board: the right edge (9–14) plus the bottom-right corner (7, 8) hold 4 PWM and
@@ -150,8 +158,10 @@ within a category don't cross.
 - **Mode button:** PC0 (23), directly under the button.
 - **ISP:** PB3 MOSI (15), PB4 MISO (16), PB5 SCK (17), PC6 RESET (29).
 - **Spare:** PD4 (2), PC1 (24), ADC6 (19), ADC7 (22): no-connect flags in the schematic.
-- **Firmware note:** Timer 0 also runs Arduino's millis(); at 1 MHz its default PWM is about 61 Hz, so firmware must change its prescaler
-  (and keep time another way) to get the 1 kHz+ the LEDs need. A firmware-stage decision.
+- **Firmware note:** Timer 0 drives seats 3 (PD6) and 4 (PD5), and also runs Arduino's millis(). At 1 MHz its default PWM is about 61 Hz;
+  1 kHz or more at 1 MHz needs prescaler 1 (3.9 kHz; prescaler 8 gives only 488 Hz), which makes millis() run 64× fast unless
+  firmware corrects it (at a 4 MHz clock, prescaler 8 gives 1.95 kHz). Timer 0 (and every timer
+  but the watchdog) stops in power-down sleep anyway, so sleep timing uses the watchdog either way. A firmware-stage decision.
 - **Wake:** every I/O pin has a pin-change interrupt, so any button wakes it.
 - **Battery level:** the internal 1.1 V reference against AVCC; no pin needed.
 - **Nets on the board:** each seat's LED pin drives `LEDn`, which feeds two 270 Ω resistors to the two LED cathodes (`LEDnA_K` outside, `LEDnB_K` inside);
