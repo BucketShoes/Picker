@@ -1,0 +1,5 @@
+hardware/pcb/lib/PickerBox.3dshapes/
+hardware/pcb/*-backups/
+hardware/pcb/*.kicad_prl
+hardware/pcb/~*.lck
+hardware/pcb/fp-info-cache

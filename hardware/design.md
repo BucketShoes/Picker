@@ -7,7 +7,7 @@ firmware only. Planned as a small run of handouts for the gaming club.
 Kept deliberately simple and cheap: no USB, no charger, no boost, no sound, no case. It runs from a CR2032 and sleeps until a
 button is pressed. Every part is SMD and on the top side, so the bottom is flat (stick-on feet, nothing to scratch a table).
 
-Status: **parts and general layout, for review.** Netlist and KiCad files come next; firmware last. All prices are USD.
+Status: **first KiCad board** in [`pcb/`](pcb): every part placed with its EasyEDA footprint and 3D model, nets assigned as guidance, no tracks. Renders: [`pcb/render-top.png`](pcb/render-top.png), [`pcb/render-angle.png`](pcb/render-angle.png). Firmware last. All prices are USD.
 
 ## Parts
 
@@ -15,20 +15,20 @@ Live JLC data, 2026-11-26. Prices per unit at the lowest break unless noted.
 
 | Ref | Qty | Part | LCSC | JLC type | Stock | Notes |
 |---|---|---|---|---|---|---|
-| U1 | 1 | ATmega328PB-AU (TQFP-32) | C132230 | Extended | 3,153 | USD 1.46 at 10. 8 hardware PWM outputs off the ISP pins (see Pin map). Recommended over the 328P (C14877, Promotional, USD 2.00 at 10) |
-| SW1–SW8 | 8 | 12×12 mm tactile, round 6.8 mm plunger, about 5–5.5 mm tall, 260–300 gf | see below | Extended | — | Used as the button itself, no cap |
+| U1 | 1 | ATmega328P-AU (TQFP-32) | C14877 | Promotional Extended | 36,556 | For now. The 328PB (C132230, USD 1.46 at 10, Extended) is decided once the quantity is: it gives all 8 seats hardware PWM, but pins 3 and 6 become PE0/PE1 instead of GND/VCC |
+| SW1–SW8 | 8 | BZCN TSF002B05030AL, 12×12 mm tactile, 300 gf, 5.0 mm tall (plunger 1.8 mm proud), 6.8 mm plunger | C53243731 | Extended | 435 | USD 0.067. Used as the button itself, no cap. Packed loose: check JLC will place it |
 | SWMODE | 1 | TS-1088-AR02016, 3.9×3 mm tactile, 1.6 N | C720477 | Basic | 715,648 | Mode button in the middle |
 | BAT1 | 1 | Lian Xin XDCR-2032-603, CR2032 holder, top-loading | C7498148 | Extended | 32,265 | Plastic hooks one side, hooked metal contact the other. + face slightly recessed. USD 0.17 |
 | LED1A/B–LED8A/B | 16 | KT-0603R red LED, 0603 | C2286 | Basic | 8.6 M | One outside and one inside each button, between its pads |
-| RL1A/B–RL8A/B | 16 | 270 Ω 0603 (Basic part to pick) | — | Basic | — | One per LED. Sized so **any** firmware is safe at 5 V (see LED drive) |
+| RL1A/B–RL8A/B | 16 | 270 Ω 0603 | C22966 | Basic | 700,847 | One per LED. Sized so **any** firmware is safe at 5 V (see LED drive) |
 | RRST | 1 | 10 kΩ 0603 | C25804 | Basic | 40 M | RESET pull-up |
 | QBAT | 1 | AO3401A P-MOSFET, SOT-23 | C15127 | Basic | 1.06 M | Reverse-cell protection; gate tied to GND |
-| CDEC1–CDEC3 | 3 | 100 nF 0603 | C14663 | Basic | 49 M | VCC, AVCC, AREF (the 328PB has one VCC pin) |
+| CDEC1, CDEC2, CAVCC, CAREF | 4 | 100 nF 0603 | C14663 | Basic | 49 M | VCC ×2, AVCC, AREF (the 328PB has one VCC pin, so one fewer) |
 | CBULK | 1 | 100 µF 6.3 V X5R 1206 | C15008 | Basic | 2.1 M | Covers LED current peaks a coin cell can't |
-| JISP | — | 6 plated holes in a row, 2.54 mm pitch | — | — | — | No part. Program by pushing a pin strip into the holes. Pin order to match your lead |
-| H1, H2 | — | 3.2 mm plated holes | — | — | — | Lanyard and/or mounting |
+| JISP | — | 6 plated holes in a row, 2.54 mm pitch (footprint of header C37208, not fitted) | C37208 | — | — | Program by pushing a pin strip into the holes. **Pin order TBD**; the board has a placeholder order |
+| H1, H2 | — | 3.2 mm holes | — | — | — | Lanyard and/or mounting. KiCad's stock `MountingHole_3.2mm_M3` (no copper, no model): the one footprint not from EasyEDA, since a bare hole has no EasyEDA part |
 
-Extended fees (about USD 3 each): **3** with the 328PB (switches, holder, MCU), 2 with the 328P.
+Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with the 328PB. Promotional and Economic status only really shows at the ordering step.
 
 ### Switch candidates (all 12×12 SMD, all with a 6.8 mm round plunger)
 
@@ -49,7 +49,10 @@ Extended fees (about USD 3 each): **3** with the 328PB (switches, holder, MCU), 
   For the same force a bigger plunger spreads it over more fingertip, so it feels less sharp, not lighter.
 - **Bigger plunger tops:** every 12×12 datasheet read here (Kinghelm, XKB, BZCN) has a 6.0–6.8 mm plunger. A bigger flat top
   means a square-stem switch with a snap-on cap, which is a hand-fitted extra part.
-- **Height** to be chosen from a render.
+- **Chosen:** TSF002B05030AL, the cheapest that meets the brief (≥ 260 gf, preferably more; 1–2 mm proud; biggest plunger; short body).
+- **Contact rating vs reliability:** the 50 mA 12 V rating is the most it may switch, not a reliability figure. Life (100,000 cycles here) is mechanical wear.
+  Whether it registers every press depends on contact resistance (≤ 100 mΩ) and the minimum load: BZCN rate it down to 1 V 10 µA, and a 20–50 kΩ
+  pull-up at 3 V passes 60–150 µA, comfortably above that.
 
 ## Footprints and models
 
@@ -83,25 +86,28 @@ CR2032 − ── GND
 - **From the cell** that gives about 4 mA per LED at full brightness (fresh cell), which is the brightest it ever gets. PWM dims the rest.
 - **PWM** at 1 kHz or more. On the 328PB all 8 seats get hardware PWM (Timers 0–4), so it costs no CPU.
 
-## Pin map (proposed for the 328PB; fixed at the netlist stage)
+## Pin map (guidance; as on the board, fixed later)
 
-| Seat | LED (hardware PWM) | Button |
+Chosen so it also works on the 328PB with hardware PWM on every seat. Pin numbers are TQFP-32.
+
+| Seat | LED (PWM on 328PB) | Button |
 |---|---|---|
-| 1 | PD6 (OC0A) | PD7 |
-| 2 | PD5 (OC0B) | PD4 |
-| 3 | PB1 (OC1A) | PB0 |
-| 4 | PB2 (OC1B) | PB6 |
-| 5 | PD3 (OC2B) | PB7 |
-| 6 | PD0 (OC3A) | PC0 |
-| 7 | PD1 (OC4A) | PC1 |
-| 8 | PD2 (OC3B) | PC2 |
+| 1 | PD6 (10) | PD7 (11) |
+| 2 | PD5 (9) | PD4 (2) |
+| 3 | PB1 (13) | PB0 (12) |
+| 4 | PB2 (14) | PB6 (7) |
+| 5 | PD3 (1) | PB7 (8) |
+| 6 | PD0 (30) | PC0 (23) |
+| 7 | PD1 (31) | PC1 (24) |
+| 8 | PD2 (32) | PC2 (25) |
 
-- **Mode button:** PC3.
-- **ISP:** PB3 MOSI, PB4 MISO, PB5 SCK, PC6 RESET. Nothing else on them. (UART1 is also on PB3/PB4, so debug serial can use the ISP holes.)
-- **Spare:** PC4, PC5, PE0–PE3.
-- **Wake:** every pin, PE included, has a pin-change interrupt, so any button wakes it.
+- **Mode button:** PC3 (26).
+- **ISP:** PB3 MOSI (15), PB4 MISO (16), PB5 SCK (17), PC6 RESET (29).
+- **Spare:** PC4, PC5, ADC6, ADC7.
+- **Wake:** every I/O pin has a pin-change interrupt, so any button wakes it.
 - **Battery level:** the internal 1.1 V reference against AVCC; no pin needed.
-- The seat-to-pin assignment will change at layout to keep tracks short; the firmware uses a table.
+- **Nets on the board:** each seat's LED pin drives `LEDn`, which feeds two 270 Ω resistors to the two LED cathodes (`LEDnA_K` outside, `LEDnB_K` inside);
+  LED anodes are on `VCC`. Switch pads 1–2 are `BTNn`, pads 3–4 `GND`.
 
 ## Sleep and pocket behaviour
 
@@ -110,23 +116,29 @@ CR2032 − ── GND
   So if one button stays down alone for about a minute with nothing else happening, the firmware drops that pin's pull-up, ignores it, and
   goes back to sleep, waking every 8 s or so on the watchdog (about 3.2 µA) to see whether it's been released. No separate pocket mode needed.
 
-## General layout (proposed)
+## General layout (as on the first board)
 
-See [`layout-sketch.svg`](layout-sketch.svg) (to scale; a sizing sketch, not a layout).
-
-- **Board:** **53 × 82 mm**, so it fits a 54 × 85.6 mm card slot despite its thickness. 2-layer, 1.6 mm, **purple** soldermask.
+- **Board:** **53 × 82 mm**, 3 mm corner radius, so it fits a 54 × 85.6 mm card slot. 2-layer, 1.6 mm, purple.
   JLC lists purple as a standard colour with no extra fee on most 2-layer orders ([JLC blog](https://jlcpcb.com/blog/pcb-solder-mask-colors-performance),
   [capabilities](https://jlcpcb.com/capabilities/Capabilities)); confirm in the dry-run quote.
-- **Buttons:** 4 down each long side, rows 21 mm apart. Players sit along the long sides, like the table.
-- **LEDs:** one on the outside of each button (towards its player) and one on the inside (towards the middle), each in the gap between that side's pads.
-- **Numbers:** 1–8 in silkscreen, running round the outside, so seat order follows the table and it doubles as a d8.
-- **Middle strip**, top to bottom: hole H1, mode button, passives, U1, cell holder, the ISP holes, hole H2.
-  The ISP holes sit at the bottom edge with the cell directly above them.
-- **Branding:** small logo on top, large logo and club text on the back. No space reserved; it fits wherever it ends up at the end.
-- **Bottom:** flat. No parts. Vias tented. Positions for 4 stick-on feet marked in silkscreen.
+- **Buttons:** 4 down each long side, symmetric, the outer ones in the corners. Rows are even at 23 mm (6.5, 29.5, 52.5, 75.5 mm from the top);
+  they don't need to be even, but even already leaves the cell clear of the middle rows' LEDs.
+- **LEDs:** one outside each button (towards its player) and one inside (towards the middle), between that side's pads.
+- **Numbers:** 1–8 in silkscreen, running round the outside: left column top to bottom 1–4, right column bottom to top 5–8.
+- **Middle strip**, top to bottom: hole H1, QBAT and U1 with its capacitors and RESET pull-up, CBULK, the cell holder (centred on the board), the ISP holes, the mode button, hole H2.
+- **Resistors:** in the gaps between rows, next to their seat's number. Arrangement only; they'll move when routed.
+- **Branding:** small logo on top, large logo and club text on the back. No space reserved.
+- **Bottom:** flat. No parts. Positions for 4 stick-on feet to be marked.
+
+## KiCad files ([`pcb/`](pcb))
+- `picker-box.kicad_pcb`: the board. Made by `tools/build_board.py` as a starting point; from now on the board file is the source, edited in KiCad.
+- `lib/`: EasyEDA footprints and symbols (`PickerBox`). The 3D models aren't in git (unclear redistribution terms): run `tools/fetch_parts.py` to fetch them.
+- No schematic yet; the nets on the board are the netlist for now.
+- **DRC** (`kicad-cli pcb drc`): no part overlaps or copper clearance errors. It reports the 108 unrouted connections (expected) and
+  silkscreen labels overlapping each other and pads (to tidy at layout).
+- **Renders:** the switch models come out see-through (EasyEDA's model colours); the real switches are black.
 
 ## Open
-1. Switch part and height (plunger protrusion), after a render.
-2. ATmega328PB (recommended) or 328P.
-3. The ISP pin order of your lead.
-4. The club logo artwork and text.
+1. ISP pin order (TBD).
+2. 328P or 328PB, decided with the quantity.
+3. Logo artwork and club text (TBD).

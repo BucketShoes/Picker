@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "PickerBox")(type "KiCad")(uri "${KIPRJMOD}/lib/PickerBox.pretty")(options "")(descr "EasyEDA footprints via easyeda2kicad"))
+)
