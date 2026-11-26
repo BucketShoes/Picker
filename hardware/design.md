@@ -113,29 +113,45 @@ CR2032 − ── GND
 - **PWM** at 1 kHz or more. On the 328PB all 8 seats get hardware PWM (Timers 0–4), so it costs no CPU. On a 328P, seats 6–8 (PD0–PD2) need
   software PWM: a few brightness steps at 1 MHz, more if firmware raises the clock prescaler to 2–4 MHz (fine down to 1.8 V).
 
-## Pin map (guidance; as on the board, fixed later)
+## Pin map (as on the board and in the schematic, 27 Nov 2026)
 
-Chosen so it also works on the 328PB with hardware PWM on every seat. Pin numbers are TQFP-32. Seats renumbered clockwise on 27 Nov 2026
-(silkscreen, references and nets together: old seat n is new seat 9 − n), so the pins per physical position are unchanged.
+Pins are swappable within a category: what's fixed is the category, not which seat gets which pin, so routing may still swap them.
+Seat n always means SWn, LEDnA/B, RLnA/B and the silkscreen number n; only the nets to U1 move. Pin numbers are TQFP-32.
 
-**Power pins** (this footprint: pins 1–8 run along U1's bottom edge, 17–24 along the top): VCC 4 and 6 on the bottom edge
-(pin 6 is PE1 on the 328PB, tied to VCC so both chips fit), AVCC 18 and AREF 20 on the top edge. CDEC1/CDEC2 serve 4/6,
-CAVCC sits off the top-right corner for 18, CAREF beside it for 20.
+**Categories** (328P and 328PB):
+- **LED (needs hardware PWM on the 328PB, off the ISP pins):** exactly 8 pins: PD0 (30), PD1 (31), PD2 (32), PD3 (1), PD5 (9), PD6 (10),
+  PB1 (13), PB2 (14). Timers: 0 (PD6, PD5), 1 (PB1, PB2), 2 (PD3; its other output is MOSI), 3 (PD0, PD2), 4 (PD1). On the 328P, PD0–PD2 have none.
+- **Button (needs wake = pin-change interrupt, which every I/O pin has):** PD4 (2), PD7 (11), PB0 (12), PB6 (7), PB7 (8), PC0–PC5 (23–28):
+  11 pins for 9 buttons. PB6/PB7 are the crystal pins, free on the internal oscillator.
+- **ISP, kept to programming:** MOSI (15), MISO (16), SCK (17), RESET (29).
+- **Analog only:** ADC6 (19), ADC7 (22) (PE2/PE3 on the 328PB). Unused: the battery is measured against the internal 1.1 V reference, no pin needed.
+- **Power:** VCC 4 and 6 (pin 6 is PE1 on the 328PB, tied to VCC so either chip fits), GND 3, 5, 21 (pin 3 is PE0 on the 328PB), AVCC 18, AREF 20.
 
-| Seat | LED (PWM on 328PB) | Button |
-|---|---|---|
-| 1 | PD2 (32) | PC2 (25) |
-| 2 | PD1 (31) | PC1 (24) |
-| 3 | PD0 (30) | PC0 (23) |
-| 4 | PD3 (1) | PB7 (8) |
-| 5 | PB2 (14) | PB6 (7) |
-| 6 | PB1 (13) | PB0 (12) |
-| 7 | PD5 (9) | PD4 (2) |
-| 8 | PD6 (10) | PD7 (11) |
+**U1 rotation: unchanged.** On this footprint pins 1–8 run along U1's bottom edge, 9–16 up its right edge, 17–24 right to left along the
+top, 25–32 down its left edge. That already suits the board: the right edge (9–14) plus the bottom-right corner (7, 8) hold 4 PWM and
+4 button pins, matching seats 1–4 on the right; the left edge (25–32) plus the bottom-left corner (1) hold 4 PWM and 4 button pins for
+seats 5–8 on the left; the top edge has PC0 right under the mode button and AVCC/AREF by their caps; the bottom edge has VCC/GND
+towards CBULK and the holder. Rotating 180° would put the mode-button pins at the bottom, away from the button.
 
-- **Mode button:** PC3 (26).
+**Assignment:** nearest first, keeping each category's pins in the same top-to-bottom order as the seats they go to, so tracks
+within a category don't cross.
+
+| Seat | Position | LED | Button |
+|---|---|---|---|
+| 1 | top right | PB2 (14) | PB0 (12) |
+| 2 | right, upper | PB1 (13) | PD7 (11) |
+| 3 | right, lower | PD6 (10) | PB7 (8) |
+| 4 | bottom right | PD5 (9) | PB6 (7) |
+| 5 | bottom left | PD3 (1) | PC5 (28) |
+| 6 | left, lower | PD2 (32) | PC4 (27) |
+| 7 | left, upper | PD1 (31) | PC3 (26) |
+| 8 | top left | PD0 (30) | PC2 (25) |
+
+- **Mode button:** PC0 (23), directly under the button.
 - **ISP:** PB3 MOSI (15), PB4 MISO (16), PB5 SCK (17), PC6 RESET (29).
-- **Spare:** PC4, PC5, ADC6, ADC7.
+- **Spare:** PD4 (2), PC1 (24), ADC6 (19), ADC7 (22): no-connect flags in the schematic.
+- **Firmware note:** Timer 0 also runs Arduino's millis(); at 1 MHz its default PWM is about 61 Hz, so firmware must change its prescaler
+  (and keep time another way) to get the 1 kHz+ the LEDs need. A firmware-stage decision.
 - **Wake:** every I/O pin has a pin-change interrupt, so any button wakes it.
 - **Battery level:** the internal 1.1 V reference against AVCC; no pin needed.
 - **Nets on the board:** each seat's LED pin drives `LEDn`, which feeds two 270 Ω resistors to the two LED cathodes (`LEDnA_K` outside, `LEDnB_K` inside);
@@ -175,7 +191,10 @@ CAVCC sits off the top-right corner for 18, CAREF beside it for 20.
 ## KiCad files ([`pcb/`](pcb))
 - `picker-box.kicad_pcb`: the board. Made by `tools/build_board.py` as a starting point; **the board file is now the source** (edited in KiCad since 26 Nov 2026). The build script no longer matches it.
 - `lib/`: EasyEDA footprints and symbols (`PickerBox`). The 3D models aren't in git (unclear redistribution terms): run `tools/fetch_parts.py` to fetch them.
-- No schematic yet; the nets on the board are the netlist for now.
+- `picker-box.kicad_sch`: the schematic, **now the netlist source**. Started by `tools/make_schematic.py` from the board's nets: one symbol
+  per footprint, a net label on every pin (no wires), one row per seat. `kicad-cli pcb drc --schematic-parity` reports 0 footprint errors.
+  ERC lists pin-type warnings only: EasyEDA's symbols mark most pins "unspecified". PDF: [`pcb/picker-box-schematic.pdf`](pcb/picker-box-schematic.pdf).
+  From here on change nets in the schematic and use Update PCB from Schematic.
 - **DRC** (`kicad-cli pcb drc`): no part overlaps or copper clearance errors. It reports the 108 unrouted connections (expected) and
   silkscreen labels overlapping each other and pads (to tidy at layout).
 - **Renders:** the main switches use the hand-made model; everything else is EasyEDA's.
