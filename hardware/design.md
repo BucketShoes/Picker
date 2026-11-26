@@ -18,18 +18,15 @@ Live JLC data, 2026-11-26. Prices are USD per unit at the lowest quantity break.
 | SW1–SW8 | 8 | Kinghelm KH-12X12X10H-SMT-D, 12×12 mm tactile, round plunger, 10 mm tall | C18186486 | Extended | 10,666 | Pure SMD, no peg holes. Used as the button itself, no cap. USD 0.06 |
 | SWMODE | 1 | TS-1088-AR02016, 3.9×3 mm tactile | C720477 | Basic | 729,745 | Mode button in the middle |
 | BAT1 | 1 | Lian Xin XDCR-2032-603, CR2032 SMD holder | C7498148 | Extended | 32,265 | Plastic hooks on one side; the metal contact on the other side pushes the cell into them and hooks over it too. USD 0.17 |
-| LED1–LED8 | 8 | KT-0603R red LED, 0603 | C2286 | Basic | 8.6 M | Red runs from a coin cell to about 2.2 V; white and green don't |
-| RL1–RL8 | 8 | 220 Ω 0603 | C22962 | Basic | 2.7 M | About 4.5 mA from a fresh cell (a little bright); firmware PWM dims |
+| LED1A/B–LED8A/B | 16 | KT-0603R red LED, 0603 | C2286 | Basic | 8.6 M | Two per button, one on each side between the switch's pads, so one shows past a finger from any side. Red runs from a coin cell to about 2.2 V; white and green don't |
+| RL1A/B–RL8A/B | 16 | 220 Ω 0603 | C22962 | Basic | 2.7 M | One per LED (parallel LEDs sharing a resistor share current unevenly). About 4.5 mA each from a fresh cell, 9 mA per pin; firmware PWM dims |
 | RRST | 1 | 10 kΩ 0603 | C25804 | Basic | 40 M | RESET pull-up |
-| QBAT | 1 | AO3401A P-MOSFET, SOT-23 | C15127 | Basic | 1.06 M | Reverse-cell protection and cell/programmer mutual exclusion, see Power |
-| DPROG | 1 | BAT54C,215 (Nexperia) Schottky pair, SOT-23 | C37704 | Promotional (no fee) | 408,948 | Programmer feed; one half used. IR 2 µA max at 25 V |
-| RGP | 1 | 1 kΩ 0603 | (Basic, to pick) | Basic | — | Programmer VCC to the QBAT gate |
-| RGG | 1 | 10 kΩ 0603 | C25804 | Basic | — | QBAT gate to GND (same part as RRST) |
+| QBAT | 1 | AO3401A P-MOSFET, SOT-23 | C15127 | Basic | 1.06 M | Reverse-cell protection; gate tied to GND |
 | CDEC1–CDEC4 | 4 | 100 nF 0603 | C14663 | Basic | 49 M | VCC ×2, AVCC, AREF |
 | CBULK | 1 | 100 µF 6.3 V X5R 1206 | C15008 | Basic | 2.1 M | Covers LED current peaks that a coin cell can't |
 | JISP | — | 6 plated holes in a straight row, 2.54 mm pitch | — | — | — | No part. Program by pushing a pin strip into the holes. Pin order to match your lead |
 
-Extended part fees (about USD 3 each): **2**, the 12 mm switches and the holder. The MCU and the diode are Promotional, so no fee.
+Extended part fees (about USD 3 each): **2**, the 12 mm switches and the holder. The MCU is Promotional, so no fee.
 
 ### Why these
 - **Switch:** the C&K PTS125SK85PSMTR (C2835221) uses the same land pattern, but costs USD 0.28, has only 656 in stock, and has
@@ -51,29 +48,24 @@ Extended part fees (about USD 3 each): **2**, the 12 mm switches and the holder.
 mix libraries. **No hand-made footprints or models are planned.** If one turns out to be needed, I'll say so first.
 The ISP holes are 6 plain plated holes; I'll use a pin-header footprint from the same library.
 
-## Power: cell or programmer, never both
+## Power
 
 ```
 CR2032 + ── QBAT drain ─┤ AO3401A ├─ source ── VCC ── U1, LEDs
-                          gate ── RGG 10k ── GND
-                          gate ── RGP 1k ── VPROG
-JISP VCC pin ── VPROG ── DPROG (BAT54C, anode → cathode) ── VCC
+                          gate ── GND
+JISP VCC ── VCC (direct)
 CR2032 − ── GND
 ```
 
-- **Running from the cell** (no programmer): VPROG floats, and RGG pulls the gate to GND. QBAT is on at about 3 V gate drive
-  (still on at 2.2 V; its threshold is −1.3 V at most), so the drop is a few mV.
-- **Programmer attached** (3.3–5 V): VCC = VPROG − about 0.3 V through DPROG. The gate sits at VPROG × 10/11, which is within about 0.3 V of
-  the source, so QBAT is off. Its body diode faces the cell, so nothing flows into the cell.
-  - The ISP signals are then at most about 0.3 V above VCC, inside the 328P's "VCC + 0.5 V" limit.
-  - With a 5 V programmer the gate sits about 0.2 V above the source. That's fine; the AO3401A's gate rating is ±12 V.
-- **Reversed cell:** QBAT's body diode blocks and the FET stays off. Holders whose one contact touches both the top and the side of
-  the cell short a reversed cell inside the holder. No circuit can prevent that, but the FET still protects the board
-  wherever only reverse voltage reaches it.
-- **Sleep current added:** DPROG's reverse leakage at 3 V, through RGP and RGG to GND. **Not yet checked:** the BAT54 datasheet's leakage
-  curve at 3 V, to confirm it's in the tens of nA, not µA.
-- **Why not program with the cell in, and no VCC pin:** a 3.6 V programmer and a 2.7 V cell give 0.9 V across the chip's input
-  protection diodes, which then conduct and push current into the cell.
+- **Running from the cell:** the gate sits about 3 V below the source, so QBAT is fully on (still on at 2.2 V; its threshold
+  is −1.3 V at most). The drop is a few mV. Nothing else draws from the cell while asleep.
+- **Reversed cell:** QBAT stays off and its body diode blocks. (Holders where one contact touches both the top and the side of
+  the cell short a reversed cell inside the holder; no circuit can prevent that.)
+- **Programming: take the cell out first.** The programmer's VCC goes straight to the chip's VCC. With a cell in, QBAT would conduct
+  backwards and the programmer would push current into the cell. The silkscreen says so by the ISP holes. It's a one-off at first
+  programming, so no isolation circuit.
+- **Why the cell can't simply stay in and power the chip:** a 3.6 V programmer against a 2.7 V cell puts 0.9 V across the
+  chip's input protection diodes (rated VCC + 0.5 V), which then conduct and push current into the cell.
 
 ## Pin map (proposed; fixed at the netlist stage)
 
@@ -92,6 +84,7 @@ pull-ups. All pins have pin-change interrupts, so any button wakes the chip from
 | 8 | PD0 | PD1 | 30, 31 |
 
 - **Mode button:** PD2 (INT0).
+- **LEDs:** each LED pin drives its button's two LEDs, each through its own resistor (about 9 mA per pin from a fresh cell).
 - **ISP:** PB3 MOSI, PB4 MISO, PB5 SCK, PC6 RESET. Nothing else is on those pins.
 - **Spare:** PB1, PB2, ADC6, ADC7.
 - **Battery level:** measured from the internal 1.1 V reference against AVCC, so it needs no pin and no divider.
@@ -102,19 +95,23 @@ The order of the seats around the board may change at layout, to keep the tracks
 
 See [`layout-sketch.svg`](layout-sketch.svg) (to scale; a sizing sketch, not a layout).
 
-- **Board:** **70 × 90 mm** rounded rectangle, 2-layer, 1.6 mm. Smaller area keeps the stencil and board cost down.
-  Top: parts; bottom: GND pour, no parts.
-- **Buttons:** 8 switches inset 10 mm from the edge: one at each corner, one at the middle of each side. They're 25 mm apart
-  across the board and 35 mm apart along it.
-- **LEDs:** each one is 9 mm in from its button, toward the centre, so the player's finger doesn't cover it.
-- **Centre:** the holder (16 × 31.5 mm, the cell overhangs to 20 mm wide) lies lengthwise in the middle.
-  - Below it: U1, with the passives, QBAT and DPROG beside it.
-  - Above it: the 6 ISP holes in a row, and the mode button.
-- **Silkscreen:** seat numbers by each button, cell polarity, and the ISP pin names.
+- **Board:** about **43 × 89 mm** (3,830 mm²), 2-layer, 1.6 mm. Top: parts; bottom: GND pour, no parts.
+- **Buttons:** 2 columns × 4 rows. Columns are 26 mm apart, rows 17 mm apart (5 mm between switch bodies).
+  The board edge is just past the outer switch pads; nothing needs to extend beyond them.
+- **LEDs:** two per button, one on each side, in the gap between that side's two switch pads (the pads are 5 mm apart).
+  They sit just outside the switch body, so a finger on the plunger doesn't hide both, and they take no extra board area.
+- **Middle strip** (between the columns, about 9 mm wide): the 6 ISP holes in a row, then U1, then the passives and QBAT,
+  then the mode button.
+- **End:** the holder lies across the board (31.5 mm of the 42 mm width), with the cell going in from the side or the top.
+- **Silkscreen:** seat numbers by each button, cell polarity, ISP pin names and "Remove cell to program".
 - **Bottom:** flat. No parts. Vias tented. Positions for 4 stick-on feet marked in silkscreen.
-- **If smaller is wanted:** 64 × 84 mm probably still fits.
+- **Seat numbering:** with a 2 × 4 grid, which button is "next" around the table is set in firmware. The default goes round
+  the outside: down one column and up the other.
 
 ## Open
 1. The ISP pin order of your lead (which signal goes in which of the 6 holes).
 2. Holder: the XDCR-2032-603, or the BS-CR2032-8?
-3. Board size: 70 × 90 mm, or try 64 × 84 mm?
+
+**Checked:** the KH switch's EasyEDA land has its pads at x ±7.0, y ±2.5 mm, each 2.54 × 1.4 mm, so each side has a 3.6 mm gap
+between its two pads. A rotated 0603 LED (land about 2.6 mm long) fits with about 0.5 mm clearance each way, which is inside JLC's chip spacing.
+The outer pads reach 8.27 mm from the switch centre, so the board is about **43 mm** wide rather than 42.
