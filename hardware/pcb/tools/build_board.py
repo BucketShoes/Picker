@@ -131,9 +131,14 @@ for s, (dx, y, rot, led_off, res_dy, res_rot) in seats.items():
     place(LIB, "KEY-SMD_4P-L12.0-W12.0-P5.00-LS15.0", f"SW{s}", "TSF002A05526A", x, y, rot, "C2888711",
           {1: f"BTN{s}", 2: f"BTN{s}", 3: "GND", 4: "GND"})
     outer = -1 if dx < 0 else 1
-    # LED A outside (towards the player), LED B inside (towards the middle)
+    # LED A outside (towards the player), LED B inside (towards the middle). On the middle (turned) switches the inner LED
+    # is for players across the board, so it moves 4.5 mm towards the nearer short edge, out past the end of the cell
+    # holder, while staying alongside its own switch (within the 12 mm body length).
     for tag, side in (("A", outer), ("B", -outer)):
-        place(LIB, "LED-SMD_L1.6-W0.8-R-RD", f"LED{s}{tag}", "KT-0603R red", x + side * led_off, y, 90, "C2286",
+        ly = y
+        if rot == 90 and tag == "B":
+            ly = y + (-4.5 if y < L / 2 else 4.5)
+        place(LIB, "LED-SMD_L1.6-W0.8-R-RD", f"LED{s}{tag}", "KT-0603R red", x + side * led_off, ly, 90, "C2286",
               {1: "VCC", 2: f"LED{s}{tag}_K"})
     ry = y + res_dy
     for tag, rx in (("A", x + outer * 3.0), ("B", x - outer * 3.0)):
