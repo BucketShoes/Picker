@@ -133,7 +133,7 @@
 		(uuid "02201512-7349-4744-b4aa-f87842024ed6")
 		(at 133.35 127.6)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL7B"
+		(property "Reference" "RL2B"
 			(at 0 4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -330,14 +330,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7")
+			(net "LED2")
 			(uuid "cf587434-be37-4b4d-90e3-0cd9695cfa6c")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7B_K")
+			(net "LED2B_K")
 			(uuid "2b579884-d149-4ec9-9a2b-33ddc74727d2")
 		)
 		(embedded_fonts no)
@@ -627,7 +627,7 @@
 		(uuid "095feb5f-b7df-4c56-8c5b-f1d4976464ff")
 		(at 121.9 104.7 90)
 		(descr "0603")
-		(property "Reference" "LED1B"
+		(property "Reference" "LED8B"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -871,7 +871,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1B_K")
+			(net "LED8B_K")
 			(uuid "c055e319-7f08-41be-b134-ab619708efcd")
 		)
 		(embedded_fonts no)
@@ -892,7 +892,7 @@
 		(uuid "0c38030e-d2ea-4d8e-8dd8-d91f1d02de05")
 		(at 136.3 125 90)
 		(descr "0603")
-		(property "Reference" "LED7B"
+		(property "Reference" "LED2B"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1136,7 +1136,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7B_K")
+			(net "LED2B_K")
 			(uuid "5394d7e7-27ec-4c65-ab04-b6cb5e6b1a88")
 		)
 		(embedded_fonts no)
@@ -1157,7 +1157,7 @@
 		(uuid "0e9fa14f-2640-4457-bc40-03f00170f3c2")
 		(at 151.5 170.9 90)
 		(descr "0603")
-		(property "Reference" "LED5A"
+		(property "Reference" "LED4A"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1401,7 +1401,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5A_K")
+			(net "LED4A_K")
 			(uuid "12dbb14b-cc32-487c-9582-9e16257ff348")
 		)
 		(embedded_fonts no)
@@ -1422,7 +1422,7 @@
 		(uuid "11b13a4e-7b2f-43f6-ac91-d7ea2699277a")
 		(at 139.85 114.5)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL8B"
+		(property "Reference" "RL1B"
 			(at 0 -1.300001 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1619,14 +1619,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8")
+			(net "LED1")
 			(uuid "990954ee-c641-44b8-862c-1198ac2401de")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8B_K")
+			(net "LED1B_K")
 			(uuid "3a72f2ee-8b40-4a34-978a-4eeb3cc6b7a7")
 		)
 		(embedded_fonts no)
@@ -1753,7 +1753,7 @@
 		(layer "F.Cu")
 		(uuid "1542a7b7-cf3e-4a18-967b-a33cdc5f7b8a")
 		(at 144.1 129.5 90)
-		(property "Reference" "SW7"
+		(property "Reference" "SW2"
 			(at 0 6.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1765,7 +1765,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 90)
 			(layer "F.Fab")
 			(uuid "1754b173-6155-4a12-8448-2738009cfe78")
@@ -1810,7 +1810,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1996,14 +1996,14 @@
 			(at -7.5 -2.5 90)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN7")
+			(net "BTN2")
 			(uuid "f488f08b-918c-4778-acc3-69f3efaac248")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5 90)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN7")
+			(net "BTN2")
 			(uuid "6eb47ad0-7cd8-4c1e-b599-1140080d4cf0")
 		)
 		(pad "3" smd rect
@@ -2021,7 +2021,7 @@
 			(uuid "48e15224-c8d9-4f03-a701-14243255fc11")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2038,7 +2038,7 @@
 		(uuid "169bd235-339c-4199-9c78-8fec7bb6a40c")
 		(at 144 114.5)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL8A"
+		(property "Reference" "RL1A"
 			(at 0 -1.300001 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2235,14 +2235,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8")
+			(net "LED1")
 			(uuid "396a0953-e0d3-41bc-9c23-32633944dd1e")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8A_K")
+			(net "LED1A_K")
 			(uuid "4e710420-4366-4f5c-bbcb-b5c26ef8def9")
 		)
 		(embedded_fonts no)
@@ -2263,9 +2263,10 @@
 		(uuid "1a603d29-b96f-4948-8fab-b291379f55d9")
 		(at 101.5 170.9 90)
 		(descr "0603")
-		(property "Reference" "LED4A"
+		(property "Reference" "LED5A"
 			(at 0 -4 90)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "b004ad4f-2d1a-4284-b750-4c18cbaec5bc")
 			(effects
 				(font
@@ -2506,7 +2507,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4A_K")
+			(net "LED5A_K")
 			(uuid "aea8ccc7-8582-4c3c-b3c0-90b344bd9597")
 		)
 		(embedded_fonts no)
@@ -2526,7 +2527,7 @@
 		(layer "F.Cu")
 		(uuid "23153b53-a5d4-4850-9374-736b98ada37a")
 		(at 111.9 175.5)
-		(property "Reference" "SW4"
+		(property "Reference" "SW5"
 			(at 0 -2.2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2538,7 +2539,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 0)
 			(layer "F.Fab")
 			(uuid "bc7bb923-ed86-4b95-8bb7-bdb30a18b302")
@@ -2583,7 +2584,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2769,14 +2770,14 @@
 			(at -7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN4")
+			(net "BTN5")
 			(uuid "5a0a4578-8392-4915-9222-efaac07e450c")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN4")
+			(net "BTN5")
 			(uuid "03b8a9f7-776b-4f0a-90f0-c33ec7ca85bb")
 		)
 		(pad "3" smd rect
@@ -2794,7 +2795,7 @@
 			(uuid "0192658b-d654-471b-b128-b19f9efc3116")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2811,7 +2812,7 @@
 		(uuid "35620442-c126-44ab-9343-7a90185864f8")
 		(at 131.1 104.7 90)
 		(descr "0603")
-		(property "Reference" "LED8B"
+		(property "Reference" "LED1B"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3055,7 +3056,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8B_K")
+			(net "LED1B_K")
 			(uuid "849e5c74-6cc0-41e2-90b7-c8cea8202cb2")
 		)
 		(embedded_fonts no)
@@ -3075,7 +3076,7 @@
 		(layer "F.Cu")
 		(uuid "35da3ffe-93c6-40a6-a897-481d2c6fa85e")
 		(at 141.1 175.5)
-		(property "Reference" "SW5"
+		(property "Reference" "SW4"
 			(at 0 -2.2 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3087,7 +3088,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 0)
 			(layer "F.Fab")
 			(uuid "9fdc2898-f25a-42f6-974f-8d2486013066")
@@ -3132,7 +3133,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3318,14 +3319,14 @@
 			(at -7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN5")
+			(net "BTN4")
 			(uuid "6bf9ef9a-6f53-472a-9ea6-34b05588471b")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN5")
+			(net "BTN4")
 			(uuid "a0fb73de-e642-41aa-94d3-619c8fbab78f")
 		)
 		(pad "3" smd rect
@@ -3343,7 +3344,7 @@
 			(uuid "f31dc24b-44b0-4760-acf7-c2d56755ce29")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3777,7 +3778,7 @@
 		(layer "F.Cu")
 		(uuid "3aabb543-a9f8-4f12-9712-3d9212843f53")
 		(at 141.1 106.5)
-		(property "Reference" "SW8"
+		(property "Reference" "SW1"
 			(at 0 -6.5 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -3789,7 +3790,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 0)
 			(layer "F.Fab")
 			(uuid "6b7b5c22-0a9b-455b-854b-471b0c2e8bfe")
@@ -3834,7 +3835,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4020,14 +4021,14 @@
 			(at -7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN8")
+			(net "BTN1")
 			(uuid "c83b9de9-c4b4-4af3-b5e3-aa11755809e3")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN8")
+			(net "BTN1")
 			(uuid "e5b2a265-e275-480b-b9d1-3c1913242968")
 		)
 		(pad "3" smd rect
@@ -4045,7 +4046,7 @@
 			(uuid "0090f172-fb1d-4cc1-9a35-56a50e6b91f3")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4062,7 +4063,7 @@
 		(uuid "47fe4890-4a96-43be-acd3-8acf36e63a04")
 		(at 115 114.5 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL1B"
+		(property "Reference" "RL8B"
 			(at 0 1.300001 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4259,14 +4260,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1")
+			(net "LED8")
 			(uuid "177a883e-fab3-43a0-b70c-6256e426b127")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1B_K")
+			(net "LED8B_K")
 			(uuid "6b17a1aa-3be4-4860-b58e-b150fc69c766")
 		)
 		(embedded_fonts no)
@@ -4287,7 +4288,7 @@
 		(uuid "4ede1330-42ef-42be-89d1-5e6dba5e590d")
 		(at 144 167.5)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL5A"
+		(property "Reference" "RL4A"
 			(at 0 1.3 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4484,14 +4485,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5")
+			(net "LED4")
 			(uuid "c0d9a0dd-ed0c-4175-a923-045b6d0d5f4c")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5A_K")
+			(net "LED4A_K")
 			(uuid "ca9729c1-7866-4f54-84b5-969abed86259")
 		)
 		(embedded_fonts no)
@@ -4781,7 +4782,7 @@
 		(uuid "54d80918-69bb-409b-a00f-b456a847efd9")
 		(at 111.95 141.7 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL3B"
+		(property "Reference" "RL6B"
 			(at 0 -4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -4978,14 +4979,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3")
+			(net "LED6")
 			(uuid "85f491a5-7d03-4eb3-8b91-6e49a034cf43")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3B_K")
+			(net "LED6B_K")
 			(uuid "e78dac34-3182-4010-b1b1-2c03ba228099")
 		)
 		(embedded_fonts no)
@@ -5006,7 +5007,7 @@
 		(uuid "554eb5a0-3020-466a-921e-8980f07e7d32")
 		(at 141.05 141.7)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL6B"
+		(property "Reference" "RL3B"
 			(at 0 4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5203,14 +5204,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6")
+			(net "LED3")
 			(uuid "dc4c5200-5772-4278-8f68-ddcfddcc5814")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6B_K")
+			(net "LED3B_K")
 			(uuid "f0356ef6-3d72-474f-bb99-8856ec6a40a2")
 		)
 		(embedded_fonts no)
@@ -5231,7 +5232,7 @@
 		(uuid "580448f6-7abf-4f05-9e4e-294ccb469163")
 		(at 133.35 126)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL7A"
+		(property "Reference" "RL2A"
 			(at 0 1.5 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5428,14 +5429,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7")
+			(net "LED2")
 			(uuid "2cc78075-d78a-4c2e-b448-1e6bbe425414")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7A_K")
+			(net "LED2A_K")
 			(uuid "d55ae28e-cff7-488f-8174-782654d2d449")
 		)
 		(embedded_fonts no)
@@ -5456,7 +5457,7 @@
 		(uuid "5dfa69e5-d2fb-461d-a629-095aba4d9ffb")
 		(at 101.4 147.8 90)
 		(descr "0603")
-		(property "Reference" "LED3A"
+		(property "Reference" "LED6A"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5700,7 +5701,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3A_K")
+			(net "LED6A_K")
 			(uuid "c4aec119-0fd7-46a9-b4d9-d4582c948dd6")
 		)
 		(embedded_fonts no)
@@ -5721,7 +5722,7 @@
 		(uuid "5e82705e-f7d4-4480-8be4-214161572e63")
 		(at 109 167.5 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL4A"
+		(property "Reference" "RL5A"
 			(at 0 -1.3 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5918,14 +5919,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4")
+			(net "LED5")
 			(uuid "edb7c286-93c2-4860-bd51-b557cd1ea1a9")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4A_K")
+			(net "LED5A_K")
 			(uuid "f064c812-7acb-4883-99a8-7bbe0b4e696d")
 		)
 		(embedded_fonts no)
@@ -5944,7 +5945,7 @@
 	(footprint "C0603"
 		(layer "F.Cu")
 		(uuid "62db28c7-3b86-4e7b-9474-c4a2b5aa34e7")
-		(at 133.5 120.2 90)
+		(at 133.3 112.6 90)
 		(descr "100nF (104) ±10% 50V")
 		(property "Reference" "CAREF"
 			(at 0 -4 90)
@@ -6215,7 +6216,7 @@
 		(uuid "66af962f-bca5-45a2-8174-2552b0d1fb8b")
 		(at 109 114.5 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL1A"
+		(property "Reference" "RL8A"
 			(at 0 1.300001 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -6412,14 +6413,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1")
+			(net "LED8")
 			(uuid "ecde146c-1805-4478-b3dc-f0bec6ae93d3")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1A_K")
+			(net "LED8A_K")
 			(uuid "98943e9b-e98b-431c-a10d-a04493ec16c7")
 		)
 		(embedded_fonts no)
@@ -6440,7 +6441,7 @@
 		(uuid "6e25c19d-6778-41e7-8e6e-194e1152fcc8")
 		(at 115 167.5 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL4B"
+		(property "Reference" "RL5B"
 			(at 0 -1.3 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -6637,14 +6638,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4")
+			(net "LED5")
 			(uuid "b6d21287-1bc5-4fd1-8841-d98aa6be065b")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4B_K")
+			(net "LED5B_K")
 			(uuid "6eb7ee21-e433-4dd1-adcb-14a783c35b85")
 		)
 		(embedded_fonts no)
@@ -6665,7 +6666,7 @@
 		(uuid "7e977607-23cd-4de7-9137-9510751eb6ec")
 		(at 151.6 147.8 90)
 		(descr "0603")
-		(property "Reference" "LED6A"
+		(property "Reference" "LED3A"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -6909,7 +6910,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6A_K")
+			(net "LED3A_K")
 			(uuid "8cdea1fe-7e61-43b0-bd44-a0005ff22d2c")
 		)
 		(embedded_fonts no)
@@ -6934,6 +6935,7 @@
 		(property "Reference" "H2"
 			(at 0 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "08e09854-1bd3-40ac-8866-1e00a29af787")
 			(effects
 				(font
@@ -7036,7 +7038,7 @@
 		(uuid "80af2d2f-233e-496c-a628-34cca64c7055")
 		(at 131.1 177 90)
 		(descr "0603")
-		(property "Reference" "LED5B"
+		(property "Reference" "LED4B"
 			(at -0.3 -1.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -7280,7 +7282,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5B_K")
+			(net "LED4B_K")
 			(uuid "417eb0da-3a6b-48a4-a4a3-e655b570997f")
 		)
 		(embedded_fonts no)
@@ -7300,7 +7302,7 @@
 		(layer "F.Cu")
 		(uuid "812a1ecf-e08e-41e1-8196-5bc2cffad103")
 		(at 108.9 152.5 -90)
-		(property "Reference" "SW3"
+		(property "Reference" "SW6"
 			(at 0 -6.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -7312,7 +7314,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 90)
 			(layer "F.Fab")
 			(uuid "69f5169d-0f63-4fe7-9f81-8a0806539d89")
@@ -7357,7 +7359,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -7543,14 +7545,14 @@
 			(at -7.5 -2.5 270)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN3")
+			(net "BTN6")
 			(uuid "53e9be7f-4a0c-4ef0-a1dd-7141a13c0371")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5 270)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN3")
+			(net "BTN6")
 			(uuid "550e9e90-f5ed-4560-b938-eb131dde1ce5")
 		)
 		(pad "3" smd rect
@@ -7568,7 +7570,7 @@
 			(uuid "f42522d1-6325-44d5-b306-12e320e18767")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -7585,7 +7587,7 @@
 		(uuid "81814970-292e-48ac-bab9-e6f25d4b68c5")
 		(at 121.9 177 90)
 		(descr "0603")
-		(property "Reference" "LED4B"
+		(property "Reference" "LED5B"
 			(at -0.3 1.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -7829,7 +7831,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4B_K")
+			(net "LED5B_K")
 			(uuid "d1d8cba2-d76a-4614-8894-fd41c62c2784")
 		)
 		(embedded_fonts no)
@@ -7850,7 +7852,7 @@
 		(uuid "81b1f742-8297-4aa8-a93f-066af791fda8")
 		(at 151.5 111.1 90)
 		(descr "0603")
-		(property "Reference" "LED8A"
+		(property "Reference" "LED1A"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8094,7 +8096,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8A_K")
+			(net "LED1A_K")
 			(uuid "93828d7d-63c1-4697-a6aa-b0b0419c983b")
 		)
 		(embedded_fonts no)
@@ -8115,7 +8117,7 @@
 		(uuid "839713e9-cef9-4a41-8e68-8e79d77a8221")
 		(at 136.3 157 90)
 		(descr "0603")
-		(property "Reference" "LED6B"
+		(property "Reference" "LED3B"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8359,7 +8361,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6B_K")
+			(net "LED3B_K")
 			(uuid "5fb44a45-6f20-4f6d-b8ad-fdeac06c834f")
 		)
 		(embedded_fonts no)
@@ -8380,7 +8382,7 @@
 		(uuid "8ba0470f-a7e8-4d45-8f05-69bea00cab41")
 		(at 151.6 134.199998 90)
 		(descr "0603")
-		(property "Reference" "LED7A"
+		(property "Reference" "LED2A"
 			(at 0 4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8624,7 +8626,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7A_K")
+			(net "LED2A_K")
 			(uuid "2511ac73-e8ec-4846-af79-fdee9f789bb5")
 		)
 		(embedded_fonts no)
@@ -8645,7 +8647,7 @@
 		(uuid "8dd9ec13-4f12-407f-9b6c-2eac124e7898")
 		(at 138 167.5)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL5B"
+		(property "Reference" "RL4B"
 			(at 0 1.3 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -8842,14 +8844,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5")
+			(net "LED4")
 			(uuid "59ff1e17-bd1a-4328-a519-f0e805d9107d")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5B_K")
+			(net "LED4B_K")
 			(uuid "19e201a5-05ef-4d3a-bdfd-79cd1456b786")
 		)
 		(embedded_fonts no)
@@ -8870,7 +8872,7 @@
 		(uuid "98fb641d-b226-4b92-9a17-24c88a9ffdef")
 		(at 101.4 134.199999 90)
 		(descr "0603")
-		(property "Reference" "LED2A"
+		(property "Reference" "LED7A"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9114,7 +9116,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2A_K")
+			(net "LED7A_K")
 			(uuid "97884ff4-7759-41c7-baff-072ddcf0fdfa")
 		)
 		(embedded_fonts no)
@@ -9134,7 +9136,7 @@
 		(layer "F.Cu")
 		(uuid "9afc2dfe-b597-43a3-a586-a55abad15f01")
 		(at 108.9 129.5 -90)
-		(property "Reference" "SW2"
+		(property "Reference" "SW7"
 			(at 0 -6.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9146,7 +9148,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 90)
 			(layer "F.Fab")
 			(uuid "5b0c1b81-ac15-4cbb-8815-3eaea78311cc")
@@ -9191,7 +9193,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9377,14 +9379,14 @@
 			(at -7.5 -2.5 270)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN2")
+			(net "BTN7")
 			(uuid "b0cb5a74-355c-494d-8e6a-07ace900e6c3")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5 270)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN2")
+			(net "BTN7")
 			(uuid "feccc257-ce2a-4e4e-9615-9e7f9b6857bf")
 		)
 		(pad "3" smd rect
@@ -9402,7 +9404,7 @@
 			(uuid "94798022-7250-412f-967a-461a642da387")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -9419,7 +9421,7 @@
 		(uuid "9c0ba0b1-f2ed-4b84-8395-2f2f99ad05b4")
 		(at 141.05 140.1)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL6A"
+		(property "Reference" "RL3A"
 			(at 0 4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9616,14 +9618,14 @@
 			(at -0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6")
+			(net "LED3")
 			(uuid "3ef54785-3306-4adf-8e16-bbc244f1854c")
 		)
 		(pad "2" smd rect
 			(at 0.75 0)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6A_K")
+			(net "LED3A_K")
 			(uuid "8bd714f5-00e2-476a-a7db-4b26fb775f21")
 		)
 		(embedded_fonts no)
@@ -9644,7 +9646,7 @@
 		(uuid "9f1804f2-4089-4e93-8526-10bfeae47dc7")
 		(at 116.7 157 90)
 		(descr "0603")
-		(property "Reference" "LED3B"
+		(property "Reference" "LED6B"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -9888,7 +9890,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3B_K")
+			(net "LED6B_K")
 			(uuid "213f2f74-bda3-4d38-9179-86584ce6da58")
 		)
 		(embedded_fonts no)
@@ -10666,7 +10668,7 @@
 		(uuid "ac1bf006-91cd-476c-a227-4a702b4bb853")
 		(at 101.5 111.1 90)
 		(descr "0603")
-		(property "Reference" "LED1A"
+		(property "Reference" "LED8A"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -10910,7 +10912,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1A_K")
+			(net "LED8A_K")
 			(uuid "4c38d431-2925-4520-93b6-356c6ad3c83f")
 		)
 		(embedded_fonts no)
@@ -11156,7 +11158,7 @@
 		(uuid "bae79784-c362-4c83-a839-f8403d0e2481")
 		(at 116.7 125 90)
 		(descr "0603")
-		(property "Reference" "LED2B"
+		(property "Reference" "LED7B"
 			(at 0 -4 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11400,7 +11402,7 @@
 			(at -0.75 0 90)
 			(size 0.8 0.8)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2B_K")
+			(net "LED7B_K")
 			(uuid "fe2c13ac-0a2f-43fc-9c06-97fff11bf8f2")
 		)
 		(embedded_fonts no)
@@ -11421,7 +11423,7 @@
 		(uuid "c5137de8-7645-44b1-a751-ec069a07c1e1")
 		(at 119.65 126 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL2A"
+		(property "Reference" "RL7A"
 			(at 0 -1.5 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11618,14 +11620,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2")
+			(net "LED7")
 			(uuid "c8e4c939-c747-4312-984c-1065a96e4649")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2A_K")
+			(net "LED7A_K")
 			(uuid "b027afca-0953-44ca-8d5b-790c5c20ff52")
 		)
 		(embedded_fonts no)
@@ -11645,7 +11647,7 @@
 		(layer "F.Cu")
 		(uuid "cfa8645f-4261-4f75-b6f3-32e6a3049c67")
 		(at 111.9 106.5)
-		(property "Reference" "SW1"
+		(property "Reference" "SW8"
 			(at 0 -6.5 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11657,7 +11659,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 0)
 			(layer "F.Fab")
 			(uuid "ba781263-eaf8-45a1-af08-dc79ba2b1d17")
@@ -11702,7 +11704,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -11888,14 +11890,14 @@
 			(at -7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN1")
+			(net "BTN8")
 			(uuid "5b2339cc-f429-4ce4-a166-e6bdbbf1b012")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN1")
+			(net "BTN8")
 			(uuid "ff2a845d-e686-461f-ba30-e8b3f73d9102")
 		)
 		(pad "3" smd rect
@@ -11913,7 +11915,7 @@
 			(uuid "f675c75a-7522-49b4-8f01-bce913a952b0")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -12164,7 +12166,7 @@
 		(layer "F.Cu")
 		(uuid "d6c3e108-07f4-4704-a158-ba33bea9a43a")
 		(at 144.1 152.5 90)
-		(property "Reference" "SW6"
+		(property "Reference" "SW3"
 			(at 0 6.5 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -12176,7 +12178,7 @@
 				)
 			)
 		)
-		(property "Value" "TSF002A05526A"
+		(property "Value" "TSF002A05026A"
 			(at 0 6.5 90)
 			(layer "F.Fab")
 			(uuid "c33d3e00-3405-4556-9a9b-3c43f1e190e5")
@@ -12221,7 +12223,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C2888711"
+		(property "LCSC Part #" "C2888710"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -12407,14 +12409,14 @@
 			(at -7.5 -2.5 90)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN6")
+			(net "BTN3")
 			(uuid "c8a363c3-da4f-4f8a-a243-b73635677b73")
 		)
 		(pad "2" smd rect
 			(at 7.5 -2.5 90)
 			(size 3 1.7)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN6")
+			(net "BTN3")
 			(uuid "dda88683-b12f-412c-9072-26886e6ff65c")
 		)
 		(pad "3" smd rect
@@ -12432,7 +12434,7 @@
 			(uuid "10897402-5ff4-42ae-9e63-c919d3f0031b")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05526A.wrl"
+		(model "${KIPRJMOD}/lib/handmade.3dshapes/HANDMADE_TSF002A05026A.wrl"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -12449,7 +12451,7 @@
 		(uuid "d998d53a-ecfd-45a9-b069-8a48f8fa028d")
 		(at 119.65 127.6 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL2B"
+		(property "Reference" "RL7B"
 			(at 0 -4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -12646,14 +12648,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2")
+			(net "LED7")
 			(uuid "ff10beb2-d89f-4054-87bd-8890a04bb7be")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2B_K")
+			(net "LED7B_K")
 			(uuid "bf5f365a-3068-497b-af2e-3853c5590aa4")
 		)
 		(embedded_fonts no)
@@ -12672,10 +12674,10 @@
 	(footprint "C0603"
 		(layer "F.Cu")
 		(uuid "f4ee87cd-f60c-4170-9899-f298484e2b93")
-		(at 133.5 117.1 90)
+		(at 131.199999 111.6 180)
 		(descr "100nF (104) ±10% 50V")
 		(property "Reference" "CAVCC"
-			(at 0 -4 90)
+			(at 0 -4 180)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "76430dd1-805a-4a37-bbd4-80dc7b88a1c6")
@@ -12687,7 +12689,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 0 4 90)
+			(at 0 4 180)
 			(layer "F.Fab")
 			(uuid "454f06ab-1beb-457f-9539-a648f38e674e")
 			(effects
@@ -12698,7 +12700,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 0 0 90)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1dfb31bc-9936-48e0-9c03-dbfdc603f3ad")
@@ -12709,7 +12711,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 0 0 90)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "a47f7581-9bec-47e2-9e2b-49c8f78232eb")
@@ -12720,7 +12722,7 @@
 			)
 		)
 		(property "LCSC Part" "C14663"
-			(at 0 0 90)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "62b8ab15-9397-4295-b2bf-62099f23b483")
@@ -12732,7 +12734,7 @@
 			)
 		)
 		(property "LCSC Part #" "C14663"
-			(at 0 0 0)
+			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "071418ee-46c9-441a-9db9-23dd0be061d7")
@@ -12746,26 +12748,6 @@
 		(attr smd)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
-			(start 0.28 -0.71)
-			(end 1.08 -0.71)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "ee9c0863-8598-45f2-a1df-b7afcf525ae6")
-		)
-		(fp_line
-			(start -0.28 -0.71)
-			(end -1.08 -0.71)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "7f764973-1371-46c3-a708-c3eda7bf526c")
-		)
-		(fp_line
 			(start 1.39 -0.4)
 			(end 1.39 0.4)
 			(stroke
@@ -12774,16 +12756,6 @@
 			)
 			(layer "F.SilkS")
 			(uuid "9fd4ddc9-d0af-4e37-a438-eab8dbcdda3a")
-		)
-		(fp_line
-			(start -1.39 0.4)
-			(end -1.39 -0.4)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "8095974e-72a7-4335-9e76-e1ab69702ab7")
 		)
 		(fp_line
 			(start 0.28 0.71)
@@ -12796,6 +12768,16 @@
 			(uuid "7db86fa9-32a7-47f6-a839-8c23630836a2")
 		)
 		(fp_line
+			(start 0.28 -0.71)
+			(end 1.08 -0.71)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "ee9c0863-8598-45f2-a1df-b7afcf525ae6")
+		)
+		(fp_line
 			(start -0.28 0.71)
 			(end -1.08 0.71)
 			(stroke
@@ -12805,27 +12787,25 @@
 			(layer "F.SilkS")
 			(uuid "cffc2d6f-f758-433c-a0b8-86f8fcc00de3")
 		)
-		(fp_arc
-			(start 1.08 -0.71)
-			(mid 1.299203 -0.619203)
-			(end 1.39 -0.4)
-			(stroke
-				(width 0.25)
-				(type solid)
-			)
-			(layer "F.SilkS")
-			(uuid "fbce500f-2b57-4f3f-9d5d-f8dd93e3ded7")
-		)
-		(fp_arc
-			(start -1.39 -0.4)
-			(mid -1.299203 -0.619203)
+		(fp_line
+			(start -0.28 -0.71)
 			(end -1.08 -0.71)
 			(stroke
 				(width 0.25)
 				(type solid)
 			)
 			(layer "F.SilkS")
-			(uuid "bbc959e9-8ac3-4868-b960-10dc028d5c9a")
+			(uuid "7f764973-1371-46c3-a708-c3eda7bf526c")
+		)
+		(fp_line
+			(start -1.39 0.4)
+			(end -1.39 -0.4)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "8095974e-72a7-4335-9e76-e1ab69702ab7")
 		)
 		(fp_arc
 			(start 1.39 0.4)
@@ -12839,6 +12819,17 @@
 			(uuid "558e34e4-1f0d-4950-be51-3fa3b052f653")
 		)
 		(fp_arc
+			(start 1.08 -0.71)
+			(mid 1.299203 -0.619203)
+			(end 1.39 -0.4)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "fbce500f-2b57-4f3f-9d5d-f8dd93e3ded7")
+		)
+		(fp_arc
 			(start -1.08 0.71)
 			(mid -1.299203 0.619203)
 			(end -1.39 0.4)
@@ -12848,6 +12839,17 @@
 			)
 			(layer "F.SilkS")
 			(uuid "d4e77e2c-0923-4e4d-b11c-bc9d3403a47c")
+		)
+		(fp_arc
+			(start -1.39 -0.4)
+			(mid -1.299203 -0.619203)
+			(end -1.08 -0.71)
+			(stroke
+				(width 0.25)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "bbc959e9-8ac3-4868-b960-10dc028d5c9a")
 		)
 		(fp_circle
 			(center -0.8 0.4)
@@ -12861,26 +12863,6 @@
 			(uuid "fbda4fab-6e30-4f96-bf24-de10baee8e23")
 		)
 		(fp_line
-			(start 0.8 -0.4)
-			(end 0.8 0.4)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "1b8d652a-06c5-4cb7-a1c6-b10da14254d0")
-		)
-		(fp_line
-			(start -0.8 -0.4)
-			(end 0.8 -0.4)
-			(stroke
-				(width 0.05)
-				(type solid)
-			)
-			(layer "F.CrtYd")
-			(uuid "2514350a-5fb1-47ab-b8f8-93c290931795")
-		)
-		(fp_line
 			(start 0.8 0.4)
 			(end -0.8 0.4)
 			(stroke
@@ -12889,6 +12871,16 @@
 			)
 			(layer "F.CrtYd")
 			(uuid "89661f14-ddc0-4e2c-896c-143060836e0f")
+		)
+		(fp_line
+			(start 0.8 -0.4)
+			(end 0.8 0.4)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "1b8d652a-06c5-4cb7-a1c6-b10da14254d0")
 		)
 		(fp_line
 			(start -0.8 0.4)
@@ -12900,8 +12892,18 @@
 			(layer "F.CrtYd")
 			(uuid "76e3eecb-fcf2-4942-8b5d-8cb81ebfd8d1")
 		)
+		(fp_line
+			(start -0.8 -0.4)
+			(end 0.8 -0.4)
+			(stroke
+				(width 0.05)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "2514350a-5fb1-47ab-b8f8-93c290931795")
+		)
 		(fp_text user "${REFERENCE}"
-			(at 0 0 90)
+			(at 0 0 180)
 			(layer "F.Fab")
 			(uuid "ca4e98c5-4e15-4bce-a144-b9ff587ab429")
 			(effects
@@ -12912,14 +12914,14 @@
 			)
 		)
 		(pad "1" smd rect
-			(at -0.7 0 90)
+			(at -0.7 0 180)
 			(size 0.8 0.9)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "VCC")
 			(uuid "290b39b8-03d1-4679-bfce-a0f5c53e5ff6")
 		)
 		(pad "2" smd rect
-			(at 0.7 0 90)
+			(at 0.7 0 180)
 			(size 0.8 0.9)
 			(layers "F.Cu" "F.Mask" "F.Paste")
 			(net "GND")
@@ -12943,7 +12945,7 @@
 		(uuid "f549a7bb-9442-4bbe-88e1-75ad07fa3307")
 		(at 111.95 140.1 180)
 		(descr "10KΩ (1002) ±1%")
-		(property "Reference" "RL3A"
+		(property "Reference" "RL6A"
 			(at 0 -4 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -13140,14 +13142,14 @@
 			(at -0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3")
+			(net "LED6")
 			(uuid "10a264d8-a831-47a1-bd2c-83e2bc016f2f")
 		)
 		(pad "2" smd rect
 			(at 0.75 0 180)
 			(size 0.806 0.864)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3A_K")
+			(net "LED6A_K")
 			(uuid "1faeae9a-dd18-44d8-ac51-2dc6954df412")
 		)
 		(embedded_fonts no)
@@ -13399,14 +13401,14 @@
 			(at -2.8 4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED5")
+			(net "LED4")
 			(uuid "1f9a7581-088e-4581-bcaf-90a0cc8277e9")
 		)
 		(pad "2" smd oval
 			(at -2 4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN2")
+			(net "BTN7")
 			(uuid "60e692ba-264f-499b-b95a-7e9d09785d7e")
 		)
 		(pad "3" smd oval
@@ -13441,56 +13443,56 @@
 			(at 2 4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN4")
+			(net "BTN5")
 			(uuid "c4b5f4ba-0274-4809-8233-545c9f3ac24b")
 		)
 		(pad "8" smd oval
 			(at 2.8 4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN5")
+			(net "BTN4")
 			(uuid "ba95e2dc-2f15-4328-bb8b-447caf7cc695")
 		)
 		(pad "9" smd oval
 			(at 4.38 2.8)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED2")
+			(net "LED7")
 			(uuid "30ebe4dc-724b-40f2-b6ab-e83f24b380e7")
 		)
 		(pad "10" smd oval
 			(at 4.38 2)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED1")
+			(net "LED8")
 			(uuid "cbb4ea23-1c11-45b0-b443-7b7bf0c6fb7d")
 		)
 		(pad "11" smd oval
 			(at 4.38 1.2)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN1")
+			(net "BTN8")
 			(uuid "10397602-19b6-4bfe-8e2b-52f15b3d3640")
 		)
 		(pad "12" smd oval
 			(at 4.38 0.4)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN3")
+			(net "BTN6")
 			(uuid "b774ca33-45f6-42b1-9aad-d9638da698b5")
 		)
 		(pad "13" smd oval
 			(at 4.38 -0.4)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED3")
+			(net "LED6")
 			(uuid "fab8d3d7-1491-4fcd-9b94-0f9065ee0b7e")
 		)
 		(pad "14" smd oval
 			(at 4.38 -1.2)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED4")
+			(net "LED5")
 			(uuid "efd71811-b3a1-4839-95ed-49bc06830676")
 		)
 		(pad "15" smd oval
@@ -13551,21 +13553,21 @@
 			(at -2 -4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN6")
+			(net "BTN3")
 			(uuid "c054d175-3d57-480f-a0fa-5694e68c8ff5")
 		)
 		(pad "24" smd oval
 			(at -2.8 -4.37)
 			(size 0.45 1.65)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN7")
+			(net "BTN2")
 			(uuid "13d5b3f0-20da-4526-84e2-8db689461d09")
 		)
 		(pad "25" smd oval
 			(at -4.38 -2.8)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "BTN8")
+			(net "BTN1")
 			(uuid "7a0a3bf2-0309-4858-9e99-7d7ae758bbe3")
 		)
 		(pad "26" smd oval
@@ -13598,21 +13600,21 @@
 			(at -4.38 1.2)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED6")
+			(net "LED3")
 			(uuid "91a52f36-1f38-49fe-85a1-f3f8cc174c30")
 		)
 		(pad "31" smd oval
 			(at -4.38 2)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED7")
+			(net "LED2")
 			(uuid "11477123-dd04-4fca-9d6a-f4d28f371bd5")
 		)
 		(pad "32" smd oval
 			(at -4.38 2.8)
 			(size 1.65 0.45)
 			(layers "F.Cu" "F.Mask" "F.Paste")
-			(net "LED8")
+			(net "LED1")
 			(uuid "ec803eb1-6cfa-4015-b852-c59f8f400dfd")
 		)
 		(embedded_fonts no)
@@ -16025,7 +16027,7 @@
 			)
 		)
 	)
-	(gr_text "7"
+	(gr_text "2"
 		(at 150.15 138 90)
 		(layer "F.SilkS")
 		(uuid "b5f97d23-3c34-4edf-a440-d70e88f436ef")
@@ -16037,7 +16039,7 @@
 			)
 		)
 	)
-	(gr_text "6"
+	(gr_text "3"
 		(at 150.15 144 90)
 		(layer "F.SilkS")
 		(uuid "b3613fa0-86cb-4194-801e-74679546a3d8")
@@ -16049,7 +16051,7 @@
 			)
 		)
 	)
-	(gr_text "2"
+	(gr_text "7"
 		(at 102.85 138 270)
 		(layer "F.SilkS")
 		(uuid "f3b67c5f-c324-46be-b453-034b0a808bbe")
@@ -16061,7 +16063,7 @@
 			)
 		)
 	)
-	(gr_text "3"
+	(gr_text "6"
 		(at 102.85 144 270)
 		(layer "F.SilkS")
 		(uuid "edc8a527-46ee-4a49-8943-f6663943e68e")
@@ -16073,7 +16075,7 @@
 			)
 		)
 	)
-	(gr_text "8"
+	(gr_text "1"
 		(at 149.9 114.699999 90)
 		(layer "F.SilkS")
 		(uuid "e7d9740f-a936-405e-9b1d-2a91e5b3ed6f")
@@ -16084,7 +16086,7 @@
 			)
 		)
 	)
-	(gr_text "5"
+	(gr_text "4"
 		(at 149.9 167.3 90)
 		(layer "F.SilkS")
 		(uuid "6b9c054c-85ca-4928-a7bb-0e088ff47b3b")
@@ -16095,7 +16097,7 @@
 			)
 		)
 	)
-	(gr_text "1"
+	(gr_text "8"
 		(at 103.1 114.699999 270)
 		(layer "F.SilkS")
 		(uuid "20a4c8b0-41ba-40b9-bf54-b309d14d6145")
@@ -16106,7 +16108,7 @@
 			)
 		)
 	)
-	(gr_text "4"
+	(gr_text "5"
 		(at 103.1 167.3 270)
 		(layer "F.SilkS")
 		(uuid "2e6c5db4-ee16-479c-8013-27b7735938bf")

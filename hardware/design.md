@@ -16,7 +16,7 @@ Live JLC data, 2026-11-26. Prices per unit at the lowest break unless noted.
 | Ref | Qty | Part | LCSC | JLC type | Stock | Notes |
 |---|---|---|---|---|---|---|
 | U1 | 1 | ATmega328P-AU (TQFP-32) | C14877 | Promotional Extended | 36,556 | The board takes either chip with no KiCad change: pins 3 and 6 are wired GND and VCC, which on the 328PB are PE0/PE1 (firmware must leave them as inputs). Choose at JLC's BOM step by changing U1's part number to the 328PB (C132230, USD 1.46 at 10, Extended); likely 328PB at qty 10 |
-| SW1–SW8 | 8 | BZCN TSF002A05526A, 12×12 mm tactile, 260 gf, 5.5 mm tall (plunger 2.3 mm proud), 6.8 mm plunger, ≥ 30,000 cycles | C2888711 | Extended | 369 | USD 0.033. Every field of the part number is decoded by its datasheet. Packed loose (code A): check JLC will place it |
+| SW1–SW8 | 8 | BZCN TSF002A05026A, 12×12 mm tactile, 260 gf, 5.0 mm tall (plunger 1.8 mm above the rim, 1.25 mm above the corner domes), 6.8 mm plunger, ≥ 30,000 cycles | C2888710 | Extended | 652 | USD 0.033. Every field of the part number is decoded by its datasheet. Packed loose (code A): check JLC will place it |
 | SWMODE | 1 | TS-1088-AR02016, 3.9×3 mm tactile, 1.6 N | C720477 | Basic | 715,648 | Mode button in the middle |
 | BAT1 | 1 | Lian Xin XDCR-2032-603, CR2032 holder, top-loading | C7498148 | Extended | 32,265 | Plastic hooks one side, hooked metal contact the other. + face slightly recessed. USD 0.17 |
 | LED1A/B–LED8A/B | 16 | KT-0603R red LED, 0603 | C2286 | Basic | 8.6 M | One outside and one inside each button, between its pads |
@@ -49,7 +49,7 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
   For the same force a bigger plunger spreads it over more fingertip, so it feels less sharp, not lighter.
 - **Bigger plunger tops:** every 12×12 datasheet read here (Kinghelm, XKB, BZCN) has a 6.0–6.8 mm plunger. A bigger flat top
   means a square-stem switch with a snap-on cap, which is a hand-fitted extra part.
-- **Chosen:** TSF002A05526A (C2888711). TSF002B05030AL (C53243731) was dropped: its datasheet (the TSF002 family spec) lists force codes 18 and 26 only,
+- **Chosen:** TSF002A05026A (C2888710), same land as the 5.5 mm C2888711 it replaced (too pointy). TSF002B05030AL (C53243731) was dropped: its datasheet (the TSF002 family spec) lists force codes 18 and 26 only,
   so its "30" (300 gf) rests on JLC's listing alone, and the trailing "L" sits in a field the datasheet calls a special code, "not normally used", without defining it.
 - **EasyEDA land vs datasheet:** EasyEDA's land is larger (pads 3.0 × 1.7 mm, 18 mm across) than BZCN's drawing (2.0 × 1.5 mm, 16.5 mm across).
   Kept per the all-EasyEDA rule; it covers the datasheet land.
@@ -71,8 +71,8 @@ Extended fees (about USD 3 each): **2** with the 328P (switches, holder), 3 with
   |---|---|---|---|---|---|
   | 4.3 | TSF002**B**04326A (100k cycles) | C2888833 | 375 | 0.036 (at 100) | not checked; listing omits "gull wing" |
   | 4.5 | TSF002A04526A | C2888709 | 1,808 | 0.026 | `SW-SMD_4P-...-LS15.1`: pads 2.54 × 1.4 at ±7.0 (16.5 across, matches BZCN's land); a different footprint from the board's |
-  | 5.0 | TSF002A05026A | C2888710 | 652 | 0.027 | same as the board's (`KEY-SMD_4P-...-LS15.0`) |
-  | 5.5 | TSF002A05526A (on the board) | C2888711 | 369 | 0.026 | `KEY-SMD_4P-...-LS15.0` |
+  | 5.0 | TSF002A05026A (**on the board**) | C2888710 | 652 | 0.027 | `KEY-SMD_4P-...-LS15.0` |
+  | 5.5 | TSF002A05526A (was on the board) | C2888711 | 369 | 0.026 | `KEY-SMD_4P-...-LS15.0` |
   | 5.0 | TSF002B05026A (100k cycles) | C2888837 | 966 | 0.037 (at 100) | `LS15.1`, as for C2888709 |
 
   C2888709's EasyEDA model is 4.5 mm tall but its body is about 3.6 mm, so it isn't BZCN's shape either.
@@ -115,18 +115,23 @@ CR2032 − ── GND
 
 ## Pin map (guidance; as on the board, fixed later)
 
-Chosen so it also works on the 328PB with hardware PWM on every seat. Pin numbers are TQFP-32.
+Chosen so it also works on the 328PB with hardware PWM on every seat. Pin numbers are TQFP-32. Seats renumbered clockwise on 27 Nov 2026
+(silkscreen, references and nets together: old seat n is new seat 9 − n), so the pins per physical position are unchanged.
+
+**Power pins** (this footprint: pins 1–8 run along U1's bottom edge, 17–24 along the top): VCC 4 and 6 on the bottom edge
+(pin 6 is PE1 on the 328PB, tied to VCC so both chips fit), AVCC 18 and AREF 20 on the top edge. CDEC1/CDEC2 serve 4/6,
+CAVCC sits off the top-right corner for 18, CAREF beside it for 20.
 
 | Seat | LED (PWM on 328PB) | Button |
 |---|---|---|
-| 1 | PD6 (10) | PD7 (11) |
-| 2 | PD5 (9) | PD4 (2) |
-| 3 | PB1 (13) | PB0 (12) |
-| 4 | PB2 (14) | PB6 (7) |
-| 5 | PD3 (1) | PB7 (8) |
-| 6 | PD0 (30) | PC0 (23) |
-| 7 | PD1 (31) | PC1 (24) |
-| 8 | PD2 (32) | PC2 (25) |
+| 1 | PD2 (32) | PC2 (25) |
+| 2 | PD1 (31) | PC1 (24) |
+| 3 | PD0 (30) | PC0 (23) |
+| 4 | PD3 (1) | PB7 (8) |
+| 5 | PB2 (14) | PB6 (7) |
+| 6 | PB1 (13) | PB0 (12) |
+| 7 | PD5 (9) | PD4 (2) |
+| 8 | PD6 (10) | PD7 (11) |
 
 - **Mode button:** PC3 (26).
 - **ISP:** PB3 MOSI (15), PB4 MISO (16), PB5 SCK (17), PC6 RESET (29).
@@ -157,8 +162,9 @@ Chosen so it also works on the 328PB with hardware PWM on every seat. Pin number
     Inner LEDs beside the switch; the bottom two (4B, 5B) 1.5 mm further south to make room for the logo.
   - **Middle:** outer LEDs 7.5 mm from the switch centre, 4.7 mm towards the board's middle row; inner LEDs 7.8 mm from the centre,
     4.5 mm towards the nearer short edge, level with the holder ends, so players across the board see them (seat 2 is still hard to see from seats 5 and 6).
-- **Numbers:** 1–8 in silkscreen, 4–5 mm tall at the long edges next to each seat's outer LED, reading from that side. Left column top to bottom 1–4,
-  right column bottom to top 5–8 (anticlockwise seen from above).
+- **Numbers:** 1–8 in bold silkscreen, 4–5 mm tall at the long edges next to each seat's outer LED, reading from that side.
+  **Clockwise from the top right:** right column top to bottom 1–4, left column bottom to top 5–8 (most games pass clockwise).
+- **No reference designators on the silkscreen** (all hidden); "Remove cell to program" either side of the holder's bottom contact.
 - **Middle strip**, top to bottom: hole H1, the mode button (labelled MODE), U1 with QBAT, its capacitors and RESET pull-up, CBULK, the cell holder
   (centred on the board) with a 20 mm silkscreen circle showing the cell, the ISP holes (labels above), the small logo, hole H2.
 - **Resistors:** each seat's pair side by side, lined up to take the track from the MCU (placed by the user in KiCad, right side mirrored from the left).
