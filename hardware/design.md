@@ -222,3 +222,11 @@ within a category don't cross.
 2. Silkscreen tidy (reference labels overlap the numbers, the small logo and each other).
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
    storing the image and flashing it itself (handy for updates on site). Firmware in PlatformIO or the Arduino IDE; decided at the firmware stage.
+4. **Firmware framework (decided 27 Nov 2026):** Arduino core (MiniCore, which covers both the 328P and the 328PB) built with
+   PlatformIO in VS Code, not the Arduino IDE. Sleep is done directly with avr-libc (`avr/sleep.h`, pin-change wake), which works
+   fine alongside the Arduino core. If the Arduino core ever gets in the way of sleeping properly, drop to plain avr-gcc.
+   - Baseline mode (must work hundreds of times and survive years on a shelf): wake on a press, pick once at least two buttons
+     are held, 3 s after the last press (like the web version), then sleep after a short while.
+   - Other games (e.g. Simon) may run at full power, but sleep when the game ends or after about 10 min idle.
+5. **JLC dry run:** done 26 Nov (BOM and footprint preview checked). Since then the only BOM change is the switches
+   C2888711 → C2888710, on the same land, and no footprint has changed. Re-check only if the BOM or footprints change.
