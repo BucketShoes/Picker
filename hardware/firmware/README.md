@@ -50,4 +50,14 @@ equivalent set.
 - Quiz buzzer: first press locks out the rest; MODE resets.
 - Reaction game: all seats light at a random moment; fastest press wins, early presses are out.
 - Hot potato: a light passes as each holder presses; when the hidden timer runs out, whoever has it loses.
+- Whack-a-mole: seats light at random for shorter and shorter times; press it while it's lit. Solo or shared score.
 - Low-battery warning: measure VCC against the internal 1.1 V reference on wake, blink if under about 2.4 V.
+
+## Plans (not built yet)
+
+- **Choosing a game:** MODE opens a menu where seat n means game n: the seats that have a game glow dimly, and pressing
+  one starts it (MODE again, or 5 s idle, goes back to the picker). Which number is which game goes on a legend: back
+  silk, or a card. The picker stays the mode it always wakes in.
+- **High scores:** one per game in EEPROM (1 KB on both chips; the EESAVE fuse keeps it across reflashing). Shown before
+  a game starts and flashed when beaten. With LEDs for 9 and 0 (see `../design.md`, Open 2), the 10 LEDs can show a
+  score as decimal digits, one digit at a time.

@@ -224,6 +224,9 @@ within a category don't cross.
      and 8 all by the same amount (not 2 and 3, which would end up close enough to read as "23").
    - Seats 2 and 7 (maybe): move each resistor pair up, so the far LED's track doesn't run down past the LED and back.
    - Try slight logo positions and keep the one with fewest vias under the back logo.
+   - Maybe: two more LEDs (with resistors), "9" and "0", so the 10 LEDs can show scores as decimal digits. No buttons
+     for them. Spare pins on both chips: PD4 (2) and PC1 (24); the 328PB also has PE2/PE3 (19, 22), which are analog-only
+     ADC6/ADC7 on the 328P. Software PWM covers any pin. Placement to decide (e.g. either side of MODE).
    - Otherwise the silk is fine as it is: outlines crossing their own pads are clipped by JLC and stay readable, the LED pin-1
      dot sitting on its (anode) pad is simply clipped, and the cell circle counts as part of the holder.
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
