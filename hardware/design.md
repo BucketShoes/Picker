@@ -7,7 +7,7 @@ firmware only. Planned as a small run of handouts for the gaming club.
 Kept deliberately simple and cheap: no USB, no charger, no boost, no sound, no case. It runs from a CR2032 and sleeps until a
 button is pressed. Every part is SMD and on the top side, so the bottom is flat (stick-on feet, nothing to scratch a table).
 
-Status: **first KiCad board** in [`pcb/`](pcb): every part placed with its EasyEDA footprint and 3D model, nets assigned as guidance, no tracks. Renders: [`pcb/render-top.png`](pcb/render-top.png), [`pcb/render-bottom.png`](pcb/render-bottom.png), [`pcb/render-angle.png`](pcb/render-angle.png), switch close-ups [`pcb/render-switch.png`](pcb/render-switch.png) and [`pcb/render-switch-side.png`](pcb/render-switch-side.png) (**hand-made switch model**, see below). Firmware last. All prices are USD.
+Status: **routed KiCad board** in [`pcb/`](pcb) (DRC clean; one re-route pass waits for the hi-res logo, see Open). Firmware started in [`firmware/`](firmware). Renders: [`pcb/render-top.png`](pcb/render-top.png), [`pcb/render-bottom.png`](pcb/render-bottom.png), [`pcb/render-angle.png`](pcb/render-angle.png), switch close-ups [`pcb/render-switch.png`](pcb/render-switch.png) and [`pcb/render-switch-side.png`](pcb/render-switch-side.png) (**hand-made switch model**, see below). All prices are USD.
 
 ## Parts
 
@@ -214,19 +214,20 @@ within a category don't cross.
   - Copper picture: [`pcb/route-copper.png`](pcb/route-copper.png), drawn by `tools/plot_copper.py`. Red/orange = top,
     blue/cyan = bottom, orange = VCC, pink = VBAT, white dots = vias.
 - **DRC** (`kicad-cli pcb drc --schematic-parity`): 0 unconnected, 0 clearance errors, 0 parity issues. It lists only silkscreen
-  warnings (labels overlapping each other and copper), to tidy at layout.
+  warnings, none needing a fix (see Open 2).
 - **Renders:** the main switches use the hand-made model; everything else is EasyEDA's.
 
 ## Open
 1. 328P or 328PB: chosen at JLC's BOM step, no KiCad change (likely 328PB at qty 10).
 2. **With the hi-res logo art (one re-route pass):**
-   - Move apart the parts whose silk outlines touch (CAVCC and CAREF; LED8A and its "8"). They pass JLC's spacing (closest:
+   - Move apart the parts whose silk outlines touch (e.g. CAVCC and CAREF). They pass JLC's spacing (closest:
      CAVCC to U1 at 0.57 mm against 0.5), but EasyEDA's outlines are drawn to just miss each other at the recommended spacing.
-   - LED pin-1 dot: it sits on the anode pad, so JLC clips it away. Pin 1 is the anode on this land, which means the dot marks
-     the opposite end from the chamfered cathode outline. Move it off the pad, or drop it and rely on the chamfer.
+   - Not LED8A and its "8": moving one number alone would look odd next to the others. Maybe shift the corner numbers 1, 4, 5
+     and 8 all by the same amount (not 2 and 3, which would end up close enough to read as "23").
+   - Seats 2 and 7 (maybe): move each resistor pair up, so the far LED's track doesn't run down past the LED and back.
    - Try slight logo positions and keep the one with fewest vias under the back logo.
-   - Otherwise the silk is fine: outlines crossing their own pads are clipped by JLC and stay readable, and the cell circle
-     counts as part of the holder.
+   - Otherwise the silk is fine as it is: outlines crossing their own pads are clipped by JLC and stay readable, the LED pin-1
+     dot sitting on its (anode) pad is simply clipped, and the cell circle counts as part of the holder.
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
    storing the image and flashing it itself (handy for updates on site). Framework: see 4.
 4. **Firmware framework (decided 27 Nov 2026):** Arduino core (MiniCore, which covers both the 328P and the 328PB) built with
