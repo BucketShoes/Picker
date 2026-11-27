@@ -1,0 +1,214 @@
+<title>Picker Box Glow</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one dark "table at night" stage on top, controls below in a wrapping strip. Single dark look by choice:
+   the LEDs read against it, and the page is about light in a dim room. */
+:root {
+  color-scheme: dark;
+  --bg: #120d17;        /* aubergine-black, leaning to the board's purple mask */
+  --panel: #1c1523;
+  --line: #33293d;
+  --fg: #ece6f0;
+  --muted: #a397ad;
+  --led: #ff3b1f;       /* the KT-0603R red */
+  --led-dim: #6e2116;
+  --display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+html, body { background: var(--bg); color: var(--fg); }
+body { font: 15px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px; }
+.wrap { max-width: 1200px; margin: 0 auto; display: grid; gap: 18px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+h1 { font: 600 1.6rem/1.1 var(--display); letter-spacing: 0.02em; margin: 0; text-wrap: balance; }
+h1 span { color: var(--led); }
+.sub { color: var(--muted); margin: 0; max-width: 62ch; }
+.stage { position: relative; width: 100%; max-width: 100%; aspect-ratio: 3 / 2; background: #000; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+canvas { width: 100%; height: 100%; display: block; }
+.status { position: absolute; left: 12px; bottom: 10px; font: 12px var(--mono); color: var(--muted); background: rgba(18,13,23,.7); padding: 3px 8px; border-radius: 4px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.group { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.label { font: 500 11px var(--display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+button { font: 500 13px var(--body); color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 6px 11px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--led); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--led-dim); border-color: var(--led); }
+.seats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.seats button { font: 600 15px var(--display); padding: 6px 0; font-variant-numeric: tabular-nums; }
+.row { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; }
+.row output { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; min-width: 7ch; }
+input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--led); }
+.note { color: var(--muted); font-size: 13px; margin: 0; max-width: 70ch; }
+.note b { color: var(--fg); font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { .stage { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Picker box, <span>lit</span></h1>
+    <p class="sub">Path-traced renders of the board (Blender Cycles). Each seat's light was rendered on its own, so the page adds them up exactly, at any brightness, in any room.</p>
+  </header>
+
+  <div class="stage"><canvas id="cv" width="1200" height="800"></canvas><div class="status" id="status">loading…</div></div>
+
+  <div class="controls">
+    <div class="group">
+      <div class="label">Where you sit</div>
+      <div class="chips" id="views"></div>
+      <p class="note" id="viewnote"></p>
+    </div>
+    <div class="group">
+      <div class="label">Seats lit</div>
+      <div class="seats" id="seats"></div>
+      <div class="chips">
+        <button id="pick" type="button">Run a pick</button>
+        <button id="allon" type="button">All on</button>
+        <button id="clear" type="button">Clear</button>
+      </div>
+    </div>
+    <div class="group">
+      <div class="label">Light</div>
+      <div class="row"><span>Room light</span><output id="roomv"></output><input id="room" type="range" min="0" max="2" step="0.01" value="1"></div>
+      <div class="row"><span>LED brightness</span><output id="ledv"></output><input id="led" type="range" min="-2" max="2" step="0.05" value="0"></div>
+      <div class="row"><span>Camera exposure</span><output id="expv"></output><input id="exp" type="range" min="-2" max="4" step="0.1" value="0"></div>
+    </div>
+  </div>
+
+  <p class="note"><b>Room light 100%</b> is about 300 lux at the table from a warm ceiling panel. <b>LED brightness 1×</b> is 40 mcd per LED (two per seat): the KT-0603R is 145–300 mcd at 20 mA, and the cell gives about 4 mA. The slider covers ¼× to 4× for the bin spread. <b>Camera exposure</b> stands in for your eyes adapting in a dark room. Materials are estimates: purple mask slightly translucent, water-clear LEDs, black switch bodies, a CR2032 in the holder.</p>
+</div>
+
+<script>
+const VIEWS = {
+  side:   "Across the table, beside seats 1–4.",
+  far:    "From the far side, lower and further away.",
+  end:    "From the short end, by seats 4 and 5.",
+  corner: "From a corner seat, low and far.",
+  top:    "Straight down."
+};
+const LAYERS = ["room", "seat1", "seat2", "seat3", "seat4", "seat5", "seat6", "seat7", "seat8"];
+const GAMMA16 = [0,1,2,3,4,6,8,10,13,16,20,25,31,38,47,63];   // firmware duty table (0..63)
+
+const cv = document.getElementById("cv");
+const gl = cv.getContext("webgl", { premultipliedAlpha: false, preserveDrawingBuffer: true });
+const statusEl = document.getElementById("status");
+if (!gl) statusEl.textContent = "This browser has no WebGL, so the mix can't be shown.";
+
+const vs = `attribute vec2 p; varying vec2 uv; void main(){ uv = vec2(p.x*.5+.5, .5-p.y*.5); gl_Position = vec4(p,0.,1.); }`;
+let fs = `precision highp float; varying vec2 uv; uniform float k[9]; uniform float ex;`;
+for (let i = 0; i < 9; i++) fs += `uniform sampler2D t${i};`;
+fs += `vec3 dec(vec3 y){ vec3 r = pow(y, vec3(2.2)); return r / max(vec3(1.) - r, vec3(.004)); }
+void main(){ vec3 a = vec3(0.);`;
+for (let i = 0; i < 9; i++) fs += `if (k[${i}] > 0.) a += k[${i}] * dec(texture2D(t${i}, uv).rgb);`;
+fs += `a *= ex; a = a / (1. + a / 4.) * 1.25; a = clamp(a, 0., 1.);
+vec3 s = mix(12.92 * a, 1.055 * pow(a, vec3(1. / 2.4)) - .055, step(.0031308, a));
+gl_FragColor = vec4(s, 1.); }`;
+
+let prog, uK, uEx;
+if (gl) {
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(o)); return o; };
+  prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+  uK = gl.getUniformLocation(prog, "k"); uEx = gl.getUniformLocation(prog, "ex");
+  for (let i = 0; i < 9; i++) gl.uniform1i(gl.getUniformLocation(prog, "t" + i), i);
+}
+
+const cache = {};   // view -> array of 9 textures
+function loadView(v) {
+  if (cache[v]) return cache[v];
+  cache[v] = Promise.all(LAYERS.map(l => new Promise((res, rej) => {
+    const im = new Image(); im.onload = () => res(im); im.onerror = () => rej(new Error(`img/${v}_${l}.png`)); im.src = `img/${v}_${l}.png`;
+  }))).then(imgs => imgs.map(im => {
+    const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
+    for (const [p, val] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, p, val);
+    return t;
+  }));
+  return cache[v];
+}
+
+const state = { view: "side", duty: new Array(8).fill(0), room: 1, led: 1, exp: 1 };
+state.duty[0] = 63;
+let tex = null;
+
+function draw() {
+  if (!gl || !tex) return;
+  for (let i = 0; i < 9; i++) { gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, tex[i]); }
+  const k = [state.room, ...state.duty.map(d => d / 63 * state.led)];
+  gl.uniform1fv(uK, new Float32Array(k)); gl.uniform1f(uEx, state.exp);
+  gl.viewport(0, 0, cv.width, cv.height); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  seatBtns.forEach((b, i) => b.setAttribute("aria-pressed", state.duty[i] > 0 ? "true" : "false"));
+}
+
+async function setView(v) {
+  state.view = v;
+  viewBtns.forEach(b => b.setAttribute("aria-pressed", b.dataset.v === v ? "true" : "false"));
+  document.getElementById("viewnote").textContent = VIEWS[v];
+  statusEl.hidden = false; statusEl.textContent = "loading…";
+  try { const t = await loadView(v); if (state.view === v) { tex = t; statusEl.hidden = true; draw(); } }
+  catch (e) { statusEl.textContent = "Couldn't load " + e.message; }
+}
+
+const viewBtns = Object.keys(VIEWS).map(v => {
+  const b = document.createElement("button"); b.type = "button"; b.dataset.v = v;
+  b.textContent = v[0].toUpperCase() + v.slice(1); b.onclick = () => setView(v);
+  document.getElementById("views").append(b); return b;
+});
+const seatBtns = [1, 4, 5, 8, 2, 3, 6, 7].map(n => n).sort((a, b) => a - b).map(n => {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = n; b.id = "seat" + n;
+  b.onclick = () => { stopAnim(); state.duty[n - 1] = state.duty[n - 1] ? 0 : 63; draw(); };
+  document.getElementById("seats").append(b); return b;
+});
+document.getElementById("allon").onclick = () => { stopAnim(); state.duty.fill(63); draw(); };
+document.getElementById("clear").onclick = () => { stopAnim(); state.duty.fill(0); draw(); };
+
+function slider(id, outId, fn, fmt) {
+  const el = document.getElementById(id), out = document.getElementById(outId);
+  const upd = () => { fn(+el.value); out.textContent = fmt(+el.value); draw(); };
+  el.oninput = upd; upd();
+}
+slider("room", "roomv", v => state.room = v, v => Math.round(v * 100) + "%");
+slider("led", "ledv", v => state.led = Math.pow(2, v), v => (Math.pow(2, v) < 1 ? Math.pow(2, v).toFixed(2) : Math.pow(2, v).toFixed(1)) + "×");
+slider("exp", "expv", v => state.exp = Math.pow(2, v), v => (v >= 0 ? "+" : "") + v.toFixed(1) + " EV");
+
+// "Run a pick": a sketch of the firmware's picker. Held seats breathe, faster in the 3 s countdown,
+// then a light runs round the held seats (55 ms, x1.16 per step, ~1.5 s) and the winner flashes.
+let raf = 0;
+function stopAnim() { cancelAnimationFrame(raf); raf = 0; }
+const order = [1, 2, 3, 4, 5, 6, 7, 8];   // seat numbers in the firmware's turn order
+document.getElementById("pick").onclick = () => {
+  stopAnim();
+  const held = order.filter(() => Math.random() < 0.7);
+  while (held.length < 3) { const s = order[Math.floor(Math.random() * 8)]; if (!held.includes(s)) held.push(s); }
+  held.sort((a, b) => a - b);
+  const steps = []; let t = 0, dt = 55;
+  while (t < 1500) { steps.push(t); t += dt; dt *= 1.16; }
+  const startIdx = Math.floor(Math.random() * held.length);
+  const winner = held[(startIdx + steps.length - 1) % held.length];
+  const t0 = performance.now(), countdown = 3000, spinEnd = countdown + t;
+  const frame = now => {
+    const e = now - t0;
+    state.duty.fill(0);
+    if (e < countdown) {
+      const rate = 1 + 2 * e / countdown, ph = Math.sin(e / 1000 * Math.PI * rate) * .5 + .5;
+      held.forEach(s => state.duty[s - 1] = GAMMA16[2 + Math.round(ph * 7)]);
+    } else if (e < spinEnd) {
+      const n = steps.filter(x => x <= e - countdown).length - 1;
+      held.forEach(s => state.duty[s - 1] = GAMMA16[2]);
+      state.duty[held[(startIdx + n) % held.length] - 1] = 63;
+    } else if (e < spinEnd + 6000) {
+      state.duty[winner - 1] = (Math.floor((e - spinEnd) / 250) % 2) ? GAMMA16[5] : 63;
+    } else { state.duty[winner - 1] = 63; draw(); raf = 0; return; }
+    draw(); raf = requestAnimationFrame(frame);
+  };
+  raf = requestAnimationFrame(frame);
+};
+
+if (gl) setView("side");
+</script>
