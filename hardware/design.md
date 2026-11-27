@@ -205,8 +205,16 @@ within a category don't cross.
   per footprint, a net label on every pin (no wires), one row per seat. `kicad-cli pcb drc --schematic-parity` reports 0 footprint errors.
   ERC lists pin-type warnings only: EasyEDA's symbols mark most pins "unspecified". PDF: [`pcb/picker-box-schematic.pdf`](pcb/picker-box-schematic.pdf).
   From here on change nets in the schematic and use Update PCB from Schematic.
-- **DRC** (`kicad-cli pcb drc`): no part overlaps or copper clearance errors. It reports the 108 unrouted connections (expected) and
-  silkscreen labels overlapping each other and pads (to tidy at layout).
+- **Routing (first pass, 27 Nov 2026):** autorouted by `tools/autoroute.py` (my own grid router, run with KiCad's Python; it
+  wipes all tracks, vias and zones first, so only for starting over). 0.25 mm signal tracks, 0.3 mm VCC/VBAT/GND, 0.2 mm
+  clearance, 0.6/0.3 mm vias, 0.5 mm to the edge, copper kept 3 mm from the mounting-hole centres.
+  - GND is a pour on both sides. Every GND pad has its own via, and there's a 5 mm grid of stitching vias (kept off silkscreen).
+  - Programming nets run on the bottom, dropping through under the chip body. Everything else is mostly on top.
+  - Correct but autorouter-shaped: not symmetric, with some long detours (VCC especially). Tidy by hand in KiCad.
+  - Copper picture: [`pcb/route-copper.png`](pcb/route-copper.png), drawn by `tools/plot_copper.py`. Red/orange = top,
+    blue/cyan = bottom, orange = VCC, pink = VBAT, white dots = vias.
+- **DRC** (`kicad-cli pcb drc --schematic-parity`): 0 unconnected, 0 clearance errors, 0 parity issues. It lists only silkscreen
+  warnings (labels overlapping each other and copper), to tidy at layout.
 - **Renders:** the main switches use the hand-made model; everything else is EasyEDA's.
 
 ## Open
