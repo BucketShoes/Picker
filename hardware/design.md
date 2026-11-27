@@ -231,6 +231,16 @@ within a category don't cross.
      dot sitting on its (anode) pad is simply clipped, and the cell circle counts as part of the holder.
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
    storing the image and flashing it itself (handy for updates on site). Framework: see 4.
+   **When the boards arrive** (27 Nov 2026 plan): try an existing ESP32 project before writing one. None was found tested
+   on the C6, so expect small pin or SPI changes.
+   - First choice: [OTA_update_AVR_using_ESP32](https://github.com/laukik-hase/OTA_update_AVR_using_ESP32), if it's simple
+     to use. It flashes from an image stored on the ESP32 and takes `.bin` (convert ours, or adapt it). It assumes a level
+     shifter for 5 V targets; we don't need one, since everything is 3.3 V. Remote updates are a bonus, not a need.
+   - Bridges for avrdude, as alternatives: [ESPAVRISP](https://github.com/tab4moji/ESPAVRISP),
+     [esp_avr_programmer](https://github.com/supperbo/esp_avr_programmer) (the ESP8266 AVR ISP library, ported).
+   - If none of them works, write one: ISP for the 328P/PB is well-trodden ground. (An earlier ATtiny10 programmer from
+     scratch hit TPI's need for 5 V to program; ISP on the 328 works at 3.3 V.)
+   - Either way: first flash with a slow ISP clock (about 100 kHz or less), since a new chip runs at 1 MHz.
 4. **Firmware framework (decided 27 Nov 2026):** Arduino core (MiniCore, which covers both the 328P and the 328PB) built with
    PlatformIO in VS Code, not the Arduino IDE. Sleep is done directly with avr-libc (`avr/sleep.h`, pin-change wake), which works
    fine alongside the Arduino core. If the Arduino core ever gets in the way of sleeping properly, drop to plain avr-gcc.
