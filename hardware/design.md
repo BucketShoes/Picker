@@ -219,11 +219,14 @@ within a category don't cross.
 
 ## Open
 1. 328P or 328PB: chosen at JLC's BOM step, no KiCad change (likely 328PB at qty 10).
-2. Silkscreen: nothing needed (checked 27 Nov 2026). The DRC warnings are footprint silk crossing their own pads (switch
-   outlines; JLC clips these) and touching outlines (CAVCC/CAREF, LED8A and the "8", the GND/VCC labels, the holder and the cell
-   circle). One loss: each LED's polarity dot sits on its anode pad and gets clipped. Placement doesn't depend on it (JLC
-   places from the CPL), so it only matters when inspecting by eye. Part spacing passes JLC's minimums; the closest is
-   CAVCC to U1 at 0.57 mm against 0.5.
+2. **With the hi-res logo art (one re-route pass):**
+   - Move apart the parts whose silk outlines touch (CAVCC and CAREF; LED8A and its "8"). They pass JLC's spacing (closest:
+     CAVCC to U1 at 0.57 mm against 0.5), but EasyEDA's outlines are drawn to just miss each other at the recommended spacing.
+   - LED pin-1 dot: it sits on the anode pad, so JLC clips it away. Pin 1 is the anode on this land, which means the dot marks
+     the opposite end from the chamfered cathode outline. Move it off the pad, or drop it and rely on the chamfer.
+   - Try slight logo positions and keep the one with fewest vias under the back logo.
+   - Otherwise the silk is fine: outlines crossing their own pads are clipped by JLC and stay readable, and the cell circle
+     counts as part of the holder.
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
    storing the image and flashing it itself (handy for updates on site). Framework: see 4.
 4. **Firmware framework (decided 27 Nov 2026):** Arduino core (MiniCore, which covers both the 328P and the 328PB) built with
