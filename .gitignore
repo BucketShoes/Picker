@@ -4,3 +4,5 @@ hardware/pcb/*.kicad_prl
 hardware/pcb/~*.lck
 hardware/pcb/fp-info-cache
 hardware/pcb/.history/
+hardware/firmware/.pio/
+hardware/firmware/.vscode/

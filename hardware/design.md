@@ -158,10 +158,8 @@ within a category don't cross.
 - **Mode button:** PC0 (23), directly under the button.
 - **ISP:** PB3 MOSI (15), PB4 MISO (16), PB5 SCK (17), PC6 RESET (29).
 - **Spare:** PD4 (2), PC1 (24), ADC6 (19), ADC7 (22): no-connect flags in the schematic.
-- **Firmware note:** Timer 0 drives seats 3 (PD6) and 4 (PD5), and also runs Arduino's millis(). At 1 MHz its default PWM is about 61 Hz;
-  1 kHz or more at 1 MHz needs prescaler 1 (3.9 kHz; prescaler 8 gives only 488 Hz), which makes millis() run 64× fast unless
-  firmware corrects it (at a 4 MHz clock, prescaler 8 gives 1.95 kHz). Timer 0 (and every timer
-  but the watchdog) stops in power-down sleep anyway, so sleep timing uses the watchdog either way. A firmware-stage decision.
+- **Firmware (decided):** the LEDs use software PWM on Timer 2 (about 500 Hz) on both chips, so the hardware PWM pins
+  aren't relied on and Timer 0 stays with Arduino's millis(). The clock is 4 MHz. See [`firmware/README.md`](firmware/README.md).
 - **Wake:** every I/O pin has a pin-change interrupt, so any button wakes it.
 - **Battery level:** the internal 1.1 V reference against AVCC; no pin needed.
 - **Nets on the board:** each seat's LED pin drives `LEDn`, which feeds two 270 Ω resistors to the two LED cathodes (`LEDnA_K` outside, `LEDnB_K` inside);
@@ -236,5 +234,7 @@ within a category don't cross.
    - Baseline mode (must work hundreds of times and survive years on a shelf): wake on a press, pick once at least two buttons
      are held, 3 s after the last press (like the web version), then sleep after a short while.
    - Other games (e.g. Simon) may run at full power, but sleep when the game ends or after about 10 min idle.
+   - **First version written** in [`firmware/`](firmware) (27 Nov 2026): the turn picker (always the mode on wake), MODE for Simon,
+     power-down sleep with the stuck-button handling above. Builds for both chips; not yet run on hardware.
 5. **JLC dry run:** done 26 Nov (BOM and footprint preview checked). Since then the only BOM change is the switches
    C2888711 → C2888710, on the same land, and no footprint has changed. Re-check only if the BOM or footprints change.
