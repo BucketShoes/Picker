@@ -221,7 +221,7 @@ within a category don't cross.
 1. 328P or 328PB: chosen at JLC's BOM step, no KiCad change (likely 328PB at qty 10).
 2. Silkscreen tidy (reference labels overlap the numbers, the small logo and each other).
 3. Programmer: an ESP32-C6 the user already has, wired on a breadboard to the ISP holes at 3.3 V (cell out). Either as a USB ISP bridge, or
-   storing the image and flashing it itself (handy for updates on site). Firmware in PlatformIO or the Arduino IDE; decided at the firmware stage.
+   storing the image and flashing it itself (handy for updates on site). Framework: see 4.
 4. **Firmware framework (decided 27 Nov 2026):** Arduino core (MiniCore, which covers both the 328P and the 328PB) built with
    PlatformIO in VS Code, not the Arduino IDE. Sleep is done directly with avr-libc (`avr/sleep.h`, pin-change wake), which works
    fine alongside the Arduino core. If the Arduino core ever gets in the way of sleeping properly, drop to plain avr-gcc.
